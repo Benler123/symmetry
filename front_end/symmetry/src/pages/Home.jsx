@@ -38,6 +38,7 @@ const Home = () => {
             <input
                 style={{
                     width: "12%",
+                    height:"0.6%",
                     padding: "20px",
                     borderRadius: "20px",
                     backgroundColor:"transparent",
@@ -55,6 +56,7 @@ const Home = () => {
                 style={{
                     width: "12%",
                     marginTop: "10px",
+                    height:"0.6%",
                     marginBottom: "20px",
                     padding: "20px",
                     borderRadius: "20px",
@@ -74,7 +76,7 @@ const Home = () => {
                     border:"3px solid #FFFFFF",
                     color:"#FFFFFF",
                     fontWeight:"bold",
-                    marginTop:"10px"
+                    marginTop:"10px",
                 }}
                 onClick={handleStart}
             >
