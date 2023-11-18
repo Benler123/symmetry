@@ -3,26 +3,22 @@ import time
 import os
 
 def take_screenshot(interval, duration):
-    """
-    Takes screenshots at a specified interval for a given duration.
-    
-    :param interval: Time in seconds between each screenshot.
-    :param duration: Total duration in seconds for which screenshots will be taken.
-    """
     end_time = time.time() + duration
     screenshot_number = 1
-
-    # Create a directory to save screenshots if it doesn't exist
     os.makedirs('screenshots', exist_ok=True)
 
     while time.time() < end_time:
         # Capture the screen
+        ss_start_time = time.time()
         screenshot = ImageGrab.grab()
+        ss_end_time = time.time() 
+        print(f'Took screenshot {screenshot_number} in {ss_end_time - ss_start_time} seconds')
         # Save the image file
+        save_start_time = time.time()
         screenshot.save(f'screenshots/screenshot_{screenshot_number}.png')
+        save_end_time = time.time()
+        #print how long it took to save 
+        print(f'Saved screenshot {screenshot_number} in {save_end_time - save_start_time} seconds')
         screenshot_number += 1
-        # Wait for the next interval
         time.sleep(interval)
-
-# Example usage: Take a screenshot every 5 seconds for 1 minute
-take_screenshot(5, 60)
+take_screenshot(1, 60)
