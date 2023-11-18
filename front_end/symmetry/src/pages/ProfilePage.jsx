@@ -8,6 +8,7 @@ import kTaylorImage from '../resources/kimmy.svg';
 import ProfileComponent from '../components/ProfileComponent';
 import WorkGradComponent from '../components/WorkGradComponent';
 import colors from '../resources/colors';
+import DailyBreakDownComponent from '../components/DailyBreakdownComponent';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -56,10 +57,14 @@ const ProfilePage = () => {
       <div style={leftPanelStyle}>
         <div style={{ marginLeft: "20px", marginTop: "20px" }}>
           <ProfileComponent profileSvg={selectedImage} name={selectedName} onClick={() => { }} />
-          <div style={{ width: "50%", marginLeft: "5px" }}>
+          <div style={{ width: "70%", marginLeft: "5px" }}>
             <WorkGradComponent value={104} backgroundColor={colors.backgroundColor} />
+          </div>
+          <div style={{ width: "85%", marginLeft: "5px"}}>
+            <DailyBreakDownComponent></DailyBreakDownComponent>
 
           </div>
+
         </div>
 
 
