@@ -70,10 +70,10 @@ def explain_images(base64_images, prompt, api_key):
 
 
 # Example usage
-image_paths = ["./screen1.png", "./screen2.png", "screen3.png", "screen4.png", "screen5.png"]
-response = explain_images(image_paths, prompt, api_key)
+# image_paths = ["./screen1.png", "./screen2.png", "screen3.png", "screen4.png", "screen5.png"]
+# response = explain_images(image_paths, prompt, api_key)
 
 # Do something with the response, like printing it
-print(response)
+# print(response)
 
-print(response["choices"][0]["message"]["content"])
+# print(response["choices"][0]["message"]["content"])

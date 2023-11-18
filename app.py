@@ -9,21 +9,17 @@ app = Flask(__name__)
 def index():
     return "RETURN"
 
+'''
+{“images” : [“ashdfuysdgfuygsdyfgsydfb”, “ahsdgyagdyuagdyagsduyba”, “useyrtywrhtsdnfks”]} 
+'''
+
 @app.route('/upload', methods=['POST'])
 def upload():
-    batch_json = {}
-    batch_json["images"] = {}
-    if not request.files:
-        return "No File"
-    base64_images = list()
-    for filename in request.files:
-        if filename != ' ':
-            file = request.files[filename]
-            file_content = file.read()
-            base64_content = base64.b64encode(file_content)
-            base64_content_string = base64_content.decode('utf-8')
-            base64_images.append(base64_content_string)
-    return jsonify(batch_json)
+    data = request.get_json()
+    if not data.get("images") or len(data.get("images")) == 0:
+        return "No Images", 400
+
+    return data["images"]
 
 @app.route('/test')
 def test():
