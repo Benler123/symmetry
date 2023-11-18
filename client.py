@@ -13,7 +13,7 @@ class ScreenCaptureClient:
         self.framerate_supported = None 
         self.time_buffer = []
         self.server_url = server_url
-    #deprecated method to create a buffer and guess on how many images the computer can process
+    #method to create a buffer and guess on how many images the computer can process
     def initialize_client_buffer(self): 
         print("Important, if system dialogue pops up, please allow access to screen recording.")   
         permission_image = ImageGrab.grab()
@@ -72,8 +72,9 @@ class ScreenCaptureClient:
         image_data = {"images": interval_images}
         try:
             response = requests.post(self.server_url, json=image_data)
+            print(response)
         except:
-            pass
+            print("Here")
 if __name__ == '__main__':
     #Create a terminal UI for the user to input the server URL, and once the URL is appended continuously capture and export images
     banner = """
@@ -84,7 +85,7 @@ if __name__ == '__main__':
     """
     print(banner)
     print("Screen Capture Client")
-    client = ScreenCaptureClient()
+    client = ScreenCaptureClient("http://localhost:8001/upload")
     client.initialize_client_buffer()
     while True:
         client.export_to_server(client.capture_interval_system_buffer())

@@ -26,6 +26,7 @@ def upload():
     combined_dict = {}
     for i in range(len(image_list)):
         combined_dict[image_list[i]] = parsed_gpt_output[i]
+    print(combined_dict)
     return jsonify(combined_dict)
 
 @app.route('/set_capture/<capture>')
