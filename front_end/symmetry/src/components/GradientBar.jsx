@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-
+import colors from '../resources/colors';
 const GradientBar = ({ value, backgroundColor }) => {
   const [opacity, setOpacity] = useState(0);
-  const fillerBackground = `linear-gradient(to right, gold, ${backgroundColor})`;
+  const fillerBackground = `linear-gradient(to right, ${colors.gradYellow}, ${backgroundColor})`;
   const fillerStyles = {
     height: '100%',
     width: `${value}%`,

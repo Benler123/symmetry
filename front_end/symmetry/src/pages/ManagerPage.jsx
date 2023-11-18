@@ -1,6 +1,4 @@
 import React from "react";
-
-
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS } from 'chart.js';
 import HeaderComponent from '../components/HeaderComponent';
@@ -8,12 +6,19 @@ import WorkComponent from '../components/WorkComponent';
 import GradientBar from '../components/GradientBar';
 import colors from '../resources/colors';
 import ProfileComponent from '../components/ProfileComponent';
-import basicman from '../resources/basicman.svg';
-
+import bSteeleImage from '../resources/bensteele.svg';
+import tKwokImage from '../resources/tylerkwok.svg';
+import mMasonImage from '../resources/mariamason.svg';
+import kTaylorImage from '../resources/kimtaylor.svg';
+import { useNavigate } from "react-router-dom";
 ChartJS.register(ArcElement);
 function ManagerPage() {
+  const navigate = useNavigate();
+
   const handleProfileClick = (name) => {
     console.log(name);
+    navigate(`/profile?username=${name}`);
+    
   };
   const mockTasks = [
     ['Programming', 21],
@@ -37,7 +42,7 @@ function ManagerPage() {
         '#4D5360', // Purple
         // Add more colors if needed, matching the Figma design
       ],
-      borderWidth: 1,
+      borderWidth: 0,
     }],
   };
   
@@ -47,22 +52,21 @@ function ManagerPage() {
     maintainAspectRatio: false, 
   };
   return (
-    <div style={{ backgroundColor: colors.backgroundColor, minHeight: "100vh", minWidth: "100vw" }}>
+    <div style={{ backgroundColor: colors.backgroundColor }}>
       <HeaderComponent />
-      <div style={{ display: 'flex', minHeight: 'calc(100vh - 105px)' }}>
-        <div style={{ width: '18%', backgroundColor: colors.backgroundColor, padding: '20px', flexDirection: "column"}}>
-        <ProfileComponent profileSvg={basicman} name={"Rob Boss"} onClick={() => handleProfileClick("Rob Boss")} />
-          <ProfileComponent profileSvg={basicman} name={"Bob Moss"} onClick={() => handleProfileClick("Bob Moss")} />
-          <ProfileComponent profileSvg={basicman} name={"Cob Loss"} onClick={() => handleProfileClick("Cob Loss")} />
-          <ProfileComponent profileSvg={basicman} name={"Dhruv Shah"} onClick={() => handleProfileClick("Dhruv Shah")} />
-          <ProfileComponent profileSvg={basicman} name={"Rob Boss"} onClick={() => handleProfileClick("Rob Boss")} />
+      <div style={{ display: 'flex' }}>
+        <div style={{ width: '21%', backgroundColor: colors.backgroundColor, padding: '20px', flexDirection: "column"}}>
+        <ProfileComponent profileSvg={bSteeleImage} name={"Ben Steele"} onClick={() => handleProfileClick("bsteele")} />
+          <ProfileComponent profileSvg={tKwokImage} name={"Tyler Kwok"} onClick={() => handleProfileClick("tkwok")} />
+          <ProfileComponent profileSvg={mMasonImage} name={"Maria Mason"} onClick={() => handleProfileClick("mmason")} />
+          <ProfileComponent profileSvg={kTaylorImage} name={"Kim Taylor "} onClick={() => handleProfileClick("ktaylor")} />
         </div>
         <div style={{ width: '82%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', color: "white"}}>
           <GradientBar value={104} backgroundColor={colors.backgroundColor} />
-          <h1 style={{ textAlign: 'left' }}>Your team spent 45 hours edging this week</h1>
+          <h1 style={{ textAlign: 'left' }}>Your team spent 197 Cumulative Hours This week on Their Tasks</h1>
           <GradientBar value={200} backgroundColor={colors.backgroundColor} />
-          <h1 style={{ textAlign: 'left' }}>Your team was focused for 69 hours this week</h1>
+          <h1 style={{ textAlign: 'left' }}>Your team was focused for 152 Cumulative Hours this week</h1>
         </div>
           <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', display: 'flex', alignItems: 'center' }}>
             <div style={{ width: '50%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
