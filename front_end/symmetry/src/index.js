@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes} from 'react-router-dom';
 import ManagerPage from './pages/ManagerPage';
 import Home from './pages/Home';
+import ProfilePage from './pages/ProfilePage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,9 @@ root.render(
     <Route path="*" element={<Home />} />
     <Route path="/" element = {<Home/>}></Route>
     <Route path="/manager" element = {<ManagerPage/>}></Route>
+    <Route path="/profile" element = {<ProfilePage/>}></Route>
+
+
 
   
     </Routes>

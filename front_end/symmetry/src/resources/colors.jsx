@@ -1,6 +1,7 @@
 const colors ={
-    text: "FFFFFF",
-    yellow: "E7AD19",
+    text: "#FFFFFF",
+    yellow: "#E7AD19",
+    gradYellow: "#FBC169",
     backgroundColor: "#2B2A2A",
     shadowColor: '#174C05',
     darkDesat: '#5D8550',

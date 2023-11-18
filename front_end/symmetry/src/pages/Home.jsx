@@ -6,10 +6,14 @@ import logo from "../resources/SymmetryLogo.png"
 const Home = () => {
     const [username, setUsername] = useState('');
     const navigate = useNavigate();
-
     const handleStart = () => {
-        navigate(`/${username}`);
+        if( username === 'msteele') {
+            navigate('/manager');
+        } else {
+            navigate(`/profile?username=${username}`);
+        }
     };
+    
 
     return (
         <div style={{
