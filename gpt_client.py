@@ -1,6 +1,8 @@
 import base64
 import requests
 import os
+import re 
+import json
 
 prompt = """ For each screenshot extract the following. Activity is the activity being performed in the screenshot. Description is a more detailed explanation of what is going on. For the activity, there are only 5 classifications. For activity, each screenshot needs to be labeled as one of the following [Coding, Browsing, Meeting,  Communicating, Scheduling, Chatting, Off-Topic]. 
 
@@ -37,9 +39,8 @@ Description: Stack overflow is open in the web browser being looked at The curre
 
 
 # OpenAI API Key
-api_key = os.environ.get("OPENAI_API_KEY")
 
-def explain_images(base64_images, prompt, api_key):
+def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_API_KEY")):
     # Setting up headers for the API request
     headers = {
         "Content-Type": "application/json",
@@ -64,10 +65,8 @@ def explain_images(base64_images, prompt, api_key):
     }
 
     # Sending the request and returning the response
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload)
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
     return response["choices"][0]["message"]["content"]
-    #return response.json()
-
 
 # Example usage
 # image_paths = ["./screen1.png", "./screen2.png", "screen3.png", "screen4.png", "screen5.png"]
@@ -77,3 +76,9 @@ def explain_images(base64_images, prompt, api_key):
 # print(response)
 
 # print(response["choices"][0]["message"]["content"])
+
+def convert(input_string):
+    pattern = r'Activity: (.*?)\nDescription: (.*?)(?=\n\n|\Z)'
+    matches = re.findall(pattern, input_string, re.DOTALL)
+    activities = [{"Activity": activity, "Description": desc.strip()} for activity, desc in matches]
+    return activities
