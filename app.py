@@ -5,6 +5,8 @@ from gpt_client import explain_images
 
 app = Flask(__name__)
 
+capturing = True
+
 @app.route('/')
 def index():
     return "RETURN"
@@ -15,12 +17,26 @@ def index():
 
 @app.route('/upload', methods=['POST'])
 def upload():
+    global capturing
+    if not capturing:
+        return "not accepting batches of images", 400
     data = request.get_json()
     if not data.get("images") or len(data.get("images")) == 0:
         return "No Images", 400
 
     return data["images"]
 
+@app.route('/set_capture/<capture>')
+def set_access(capture):
+    global capturing
+    if capture.lower() == "y" or capture.lower() == "yes":
+        capturing = True
+        return "now capturing", 200
+    elif capture.lower() == "n" or capture.lower() == "n":
+        capturing = False
+        return "no longer capturing", 200
+    return "input was {} but needs to be yes/y or no/n", 400
+    
 @app.route('/test')
 def test():
     return "API WORKED"
