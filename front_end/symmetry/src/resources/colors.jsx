@@ -7,6 +7,8 @@ const colors ={
     darkDesat: '#5D8550',
     fontColor: '#000000',
     inverseFontColor: "#FFFFFF",
+    green: "#8DF384",
+    red: "#F38484",
 }
 
 

@@ -6,6 +6,8 @@ import dShahImage from '../resources/dhruvshah.svg';
 import mMasonImage from '../resources/mellisa.svg';
 import kTaylorImage from '../resources/kimmy.svg';
 import ProfileComponent from '../components/ProfileComponent';
+import WorkGradComponent from '../components/WorkGradComponent';
+import colors from '../resources/colors';
 
 const ProfilePage = () => {
   const location = useLocation();
@@ -20,15 +22,15 @@ const ProfilePage = () => {
   };
 
   const leftPanelStyle = {
-    flex: 7,
-    backgroundColor: '#f0f0f0', 
+    flex: 1,
+    backgroundColor: colors.backgroundColor,
     flexDirection: 'column',
 
   };
 
   const rightPanelStyle = {
-    flex: 6,
-    backgroundColor: '#ffffff', 
+    flex: 1,
+    backgroundColor: '#ffffff',
     flexDirection: 'column',
 
   };
@@ -46,16 +48,21 @@ const ProfilePage = () => {
     'mmason': "Maria Mason",
     'ktaylor': "Kim Taylor"
   }
-  const selectedImage = userImages[username] || bSteeleImage; 
-  const selectedName = userNames[username] || 'Rob Boss'; 
+  const selectedImage = userImages[username] || bSteeleImage;
+  const selectedName = userNames[username] || 'Rob Boss';
 
   return (
     <div style={profileContainerStyle}>
       <div style={leftPanelStyle}>
-        <div style={{marginLeft: "20px", marginTop: "20px"}}
-        ><ProfileComponent profileSvg={selectedImage} name={selectedName} />
-</div>
-        
+        <div style={{ marginLeft: "20px", marginTop: "20px" }}>
+          <ProfileComponent profileSvg={selectedImage} name={selectedName} onClick={() => { }} />
+          <div style={{ width: "50%", marginLeft: "5px" }}>
+            <WorkGradComponent value={104} backgroundColor={colors.backgroundColor} />
+
+          </div>
+        </div>
+
+
         {/* Left panel content */}
       </div>
       <div style={rightPanelStyle}>

@@ -1,51 +1,44 @@
-from flask import Flask, request, render_template, jsonify
+from fastapi import FastAPI, HTTPException, Body, BackgroundTasks
+from typing import List, Dict
 import base64
-from gpt_client import explain_images, convert
+from gpt_client import bg_task_completion_export
+import uvicorn
 
-
-app = Flask(__name__)
+app = FastAPI()
 
 capturing = True
 
-@app.route('/')
+@app.get("/")
 def index():
     return "RETURN"
 
-
-@app.route('/upload', methods=['POST'])
-def upload():
+@app.post("/upload")
+def upload(background_tasks: BackgroundTasks, data: Dict[str, List[str]] = Body(...)):
     global capturing
     if not capturing:
-        return "not accepting batches of images", 400
-    data = request.get_json()
+        raise HTTPException(status_code=400, detail="not accepting batches of images")
+    
     if not data.get("images") or len(data.get("images")) == 0:
-        return "No Images", 400
+        raise HTTPException(status_code=400, detail="No Images")
+    
     image_list = data["images"]
-    gpt_output = explain_images(data["images"])
-    parsed_gpt_output = convert(gpt_output)
-    combined_dict = {}
-    for i in range(len(image_list)):
-        combined_dict[image_list[i]] = parsed_gpt_output[i]
-    print(combined_dict)
-    return jsonify(combined_dict)
+    background_tasks.add_task(bg_task_completion_export, image_list)
+    return
 
-@app.route('/set_capture/<capture>')
-def set_access(capture):
+@app.get("/set_capture/{capture}")
+def set_access(capture: str):
     global capturing
     if capture.lower() == "y" or capture.lower() == "yes":
         capturing = True
-        return "now capturing", 200
-    elif capture.lower() == "n" or capture.lower() == "n":
+        return "now capturing"
+    elif capture.lower() == "n" or capture.lower() == "no":
         capturing = False
-        return "no longer capturing", 200
-    return "input was {} but needs to be yes/y or no/n", 400
-    
-@app.route('/test')
+        return "no longer capturing"
+    raise HTTPException(status_code=400, detail="Input must be yes/y or no/n")
+
+@app.get("/test")
 def test():
     return "API WORKED"
 
 if __name__ == "__main__":
-    app.run(port=8001, debug=True)
-
-
-
+    uvicorn.run(app, host="127.0.0.1", port=8001, debug=True)
