@@ -37,7 +37,8 @@ const ProfilePage = () => {
   const rightPanelStyle = {
     flex: 4,
     backgroundColor: colors.backgroundColor,
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'left',
     fontFamily: "'Inria Sans', sans-serif",
     color: "#FFFFFF",
 
