@@ -11,9 +11,6 @@ capturing = True
 def index():
     return "RETURN"
 
-'''
-{“images” : [“ashdfuysdgfuygsdyfgsydfb”, “ahsdgyagdyuagdyagsduyba”, “useyrtywrhtsdnfks”]} 
-'''
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -49,9 +46,5 @@ def test():
 if __name__ == "__main__":
     app.run(port=8001, debug=True)
 
-# def encode_image(image_path):
-#   with open(image_path, "rb") as image_file:
-#     return base64.b64encode(image_file.read()).decode('utf-8')
-        
 
 

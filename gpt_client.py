@@ -68,15 +68,6 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
     return response["choices"][0]["message"]["content"]
 
-# Example usage
-# image_paths = ["./screen1.png", "./screen2.png", "screen3.png", "screen4.png", "screen5.png"]
-# response = explain_images(image_paths, prompt, api_key)
-
-# Do something with the response, like printing it
-# print(response)
-
-# print(response["choices"][0]["message"]["content"])
-
 def convert(input_string):
     pattern = r'Activity: (.*?)\nDescription: (.*?)(?=\n\n|\Z)'
     matches = re.findall(pattern, input_string, re.DOTALL)
