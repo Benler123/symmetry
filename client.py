@@ -6,6 +6,8 @@ import io
 import base64
 import requests
 
+TIME_INTERVAL = 30
+
 class ScreenCaptureClient:
     def __init__(self, server_url="http://localhost:5000/"): 
         self.mean = None
@@ -30,7 +32,7 @@ class ScreenCaptureClient:
             times.append(ss_end_time - ss_start_time)
         self.mean = statistics.mean(times)
         self.median = statistics.median(times)
-        self.framerate_supported = math.floor((1 / (self.mean)) * 60)
+        self.framerate_supported = math.floor((1 / (self.mean)) * (TIME_INTERVAL))
         self.time_buffer = times
         print("initialized client.")
     #captures 1 minute worth of images without buffering based on expected framerate 
@@ -64,7 +66,7 @@ class ScreenCaptureClient:
             #remove the first element from the time buffer
             self.time_buffer.pop(0)
             self.time_buffer.append(ss_end_time - ss_start_time)
-        self.framerate_supported = math.floor((1 / (statistics.mean(self.time_buffer))) * 60)
+        self.framerate_supported = math.floor((2 / (statistics.mean(self.time_buffer))) * TIME_INTERVAL)
         return interval_images
     def export_to_server(self, interval_images):
         print("Exporting to server.")

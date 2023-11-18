@@ -61,7 +61,7 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
                 ] + [{"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image}"}} for image in base64_images]
             }
         ],
-        "max_tokens": 300
+        "max_tokens": 1024
     }
 
     # Sending the request and returning the response

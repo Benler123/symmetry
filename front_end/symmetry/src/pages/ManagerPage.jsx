@@ -63,9 +63,9 @@ function ManagerPage() {
         </div>
         <div style={{ width: '82%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', color: "white"}}>
-          <GradientBar value={104} backgroundColor={colors.backgroundColor} />
+          <GradientBar value={104} backgroundColor={colors.backgroundColor} width={"80%"} />
           <h1 style={{ textAlign: 'left' }}>Your team spent 197 Cumulative Hours This week on Their Tasks</h1>
-          <GradientBar value={200} backgroundColor={colors.backgroundColor} />
+          <GradientBar value={200} backgroundColor={colors.backgroundColor} width={'60%'}/>
           <h1 style={{ textAlign: 'left' }}>Your team was focused for 152 Cumulative Hours this week</h1>
         </div>
           <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', display: 'flex', alignItems: 'center' }}>
