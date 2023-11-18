@@ -73,3 +73,12 @@ def convert(input_string):
     matches = re.findall(pattern, input_string, re.DOTALL)
     activities = [{"Activity": activity, "Description": desc.strip()} for activity, desc in matches]
     return activities
+
+def bg_task_completion_export(base_64_image_array):
+    print("Converting")
+    activities = convert(explain_images(base_64_image_array))
+    print("Finished converting")
+    #write activities to text file
+    with open("activities.txt", "w") as f:
+        json.dump(activities, f)
+    return activities
