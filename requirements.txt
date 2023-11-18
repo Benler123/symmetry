@@ -13,3 +13,5 @@ PyRect==0.2.0
 PyScreeze==0.1.30
 pytweening==1.0.7
 rubicon-objc==0.4.7
+Flask==2.2.2
+
