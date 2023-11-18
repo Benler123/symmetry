@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import colors from '../resources/colors';
-import logo from "../resources/SymmetryLogo.png"
+import logo from "../resources/symLogo.svg"
+import loginImage from "../resources/loginGuy.svg"
 
 const Home = () => {
     const [username, setUsername] = useState('');
@@ -21,21 +22,29 @@ const Home = () => {
             display: 'flex',
             flexDirection: "column",
             alignItems: "center",
-            justifyContent: "center",
+            justifyContent: "flex-start",
             backgroundColor: colors.backgroundColor
         }}>
             <img
-                style={{ margin: "20px 0", maxWidth: "20%", height: "auto"}}
+                style={{margin: "20px 0", maxWidth: "15%", height: "auto"}}
                 src={logo}
                 alt="Logo" 
             />
-            <h1 style={{color: "#FFFFFF" }}
-            >Strategic Alignment for DevOps</h1>
+            <img
+                style={{ margin: "50px 0", maxWidth: "10%", height: "auto"}}
+                src={loginImage}
+                alt="Logo" 
+            />
             <input
                 style={{
-                    width: "30%",
+                    width: "12%",
                     padding: "20px",
-                    borderRadius: "10px",
+                    borderRadius: "20px",
+                    backgroundColor:"transparent",
+                    border:"3px solid #FFFFFF",
+                    color:"#FFFFFF",
+                    fontWeight:"bold",
+                    marginBottom:"20px"
                 }}
                 type="text"
                 placeholder="Username"
@@ -44,11 +53,15 @@ const Home = () => {
             />
             <input
                 style={{
-                    width: "30%",
+                    width: "12%",
                     marginTop: "10px",
                     marginBottom: "20px",
                     padding: "20px",
-                    borderRadius: "10px",
+                    borderRadius: "20px",
+                    backgroundColor:"transparent",
+                    border:"3px solid #FFFFFF",
+                    fontWeight:"bold",
+                    color:"#FFFFFF"
                 }}
                 type="password"
                 placeholder="Password"
@@ -56,11 +69,16 @@ const Home = () => {
             <button 
                 style={{
                     padding: "15px", // Added padding
-                    borderRadius: "10px", // Added border radius
+                    borderRadius: "20px", // Added border radius
+                    backgroundColor:"transparent",
+                    border:"3px solid #FFFFFF",
+                    color:"#FFFFFF",
+                    fontWeight:"bold",
+                    marginTop:"10px"
                 }}
                 onClick={handleStart}
             >
-                Log in
+                Sign In
             </button>
         </div>
     );

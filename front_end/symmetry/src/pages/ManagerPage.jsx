@@ -8,8 +8,8 @@ import colors from '../resources/colors';
 import ProfileComponent from '../components/ProfileComponent';
 import bSteeleImage from '../resources/bensteele.svg';
 import tKwokImage from '../resources/tylerkwok.svg';
-import mMasonImage from '../resources/mariamason.svg';
-import kTaylorImage from '../resources/kimtaylor.svg';
+import mMasonImage from '../resources/mellisa.svg';
+import kTaylorImage from '../resources/kimmy.svg';
 import { useNavigate } from "react-router-dom";
 ChartJS.register(ArcElement);
 function ManagerPage() {
