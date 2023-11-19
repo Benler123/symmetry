@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for version 6
 import { useLocation } from 'react-router-dom';
@@ -13,7 +13,7 @@ import colors from '../resources/colors';
 import ColoredBullets from '../components/ColoredBullets/ColoredBullets';
 import DailyBreakDownComponent from '../components/DailyBreakdownComponent';
 import Footer from '../components/footer';
-
+//
 const ProfilePage = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
   const goBack = () => {
@@ -21,6 +21,56 @@ const ProfilePage = () => {
   };
   const location = useLocation();
   const [selectedDay, setSelectedDay] = useState("M");
+  const [blockData, setBlockData] = useState({});
+  const [weekData, setWeekData] = useState({});
+  const[activityData, setActivityData] = useState({});
+  const [totalHoursPerDay, setTotalHoursPerDay] = useState({});
+  const [focusedHoursPerDay, setFocusedHoursPerDay] = useState({});
+  const [totalWeeklyHours, setTotalWeeklyHours] = useState(0);
+
+  useEffect(() => {
+    fetch("http://127.0.0.1:8001/matts_endpoint/{user}/{start_date}", {
+      method: "GET",
+      headers: {
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setBlockData(data)
+        const newTotalHours = {};
+        const newFocusedHours = {};
+        let weeklyHours = 0;
+        const activityTotals = {};
+
+        Object.entries(data).forEach(([day, { activities }]) => {
+            let totalHours = 0;
+            let focusedHours = 0;
+
+            Object.entries(activities).forEach(([activity, hours]) => {
+                totalHours += hours;
+                if (!["Scheduling", "Meeting", "Off-Topic"].includes(activity)) {
+                    focusedHours += hours;
+                }
+
+                // Aggregate activity hours for the week
+                activityTotals[activity] = (activityTotals[activity] || 0) + hours;
+            });
+
+            newTotalHours[day] = totalHours;
+            newFocusedHours[day] = focusedHours;
+            weeklyHours += totalHours;
+        });
+
+        setTotalHoursPerDay(newTotalHours);
+        setFocusedHoursPerDay(newFocusedHours);
+        setTotalWeeklyHours(weeklyHours);
+        setWeekData(activityTotals);
+        console.log(weeklyHours)
+        console.log(newTotalHours)
+        
+      })
+      .catch((error) => console.log(error));
+  }, []);
 
   const searchParams = new URLSearchParams(location.search);
   const username = searchParams.get('username');
@@ -153,7 +203,7 @@ const ProfilePage = () => {
           </div>
           <div style={{ width: "85%", marginLeft: "5px"}}>
             {/* Pass the selectedName as personName prop to DailyBreakDownComponent */}
-            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName}></DailyBreakDownComponent>
+            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal = {totalWeeklyHours} dailyHours = {totalHoursPerDay}></DailyBreakDownComponent>
           </div>
         </div>
         {/* Left panel content */}

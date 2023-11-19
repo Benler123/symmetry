@@ -4,7 +4,7 @@ import { ArcElement, Chart as ChartJS } from 'chart.js';
 
 ChartJS.register(ArcElement);
 
-function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName }) {
+function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dailyHours, weeklyTotal}) {
   const days = ["M", "T", "W", "TR", "F"]; // Array of days
   const dayName = {
     "M": "Monday",
@@ -41,7 +41,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName }) {
   const data = {
     labels: ["working", "not"],
     datasets: [{
-      data: [percentages[selectedDay], 100 - percentages[selectedDay]],
+      data: [dailyHours[selectedDay] / weeklyTotal * 100, 100 - (dailyHours[selectedDay] / weeklyTotal * 100)],
       backgroundColor: ['#FFFFFF', '#46BFBD'],
       borderWidth: 0,
     }],
@@ -76,7 +76,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName }) {
         <div style={{ width: '80%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', transform: 'translateX(-120px)' }}>
           <Pie data={data} options={chartOptions} />
         </div>
-        <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {percentages[selectedDay]}% of {personName}'s work this week</h3>
+        <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {dailyHours[selectedDay] / weeklyTotal * 100}% of {personName}'s work this week</h3>
       </div>
     </div>
   );
