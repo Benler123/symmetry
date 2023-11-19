@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import colors from '../resources/colors';
-const GradientBar = ({ value, backgroundColor }) => {
+
+const GradientBar = ({ value, backgroundColor, width }) => {
   const [opacity, setOpacity] = useState(0);
   const fillerBackground = `linear-gradient(to right, ${colors.gradYellow}, ${backgroundColor})`;
+  
   const fillerStyles = {
     height: '100%',
     width: `${value}%`,
@@ -13,8 +15,10 @@ const GradientBar = ({ value, backgroundColor }) => {
     opacity: opacity
   };
 
+  // Replace the hardcoded '80%' with the width prop
   const containerStyles = {
-    height: '12%',
+    height: '20%',
+    width: width, // use the width prop here
     backgroundColor: backgroundColor || '#e0e0de',
     borderRadius: 5,
     margin: '10px 0',
@@ -35,4 +39,3 @@ const GradientBar = ({ value, backgroundColor }) => {
 };
 
 export default GradientBar;
-

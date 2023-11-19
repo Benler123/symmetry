@@ -1,0 +1,32 @@
+.teammates-helped-container {
+    position: relative;
+    text-align: center;
+  }
+  
+  .images-stack {
+    position: relative;
+    height: 100px;
+    width: 300px;  
+    margin-bottom: 10px;
+  }
+  
+  .images-stack img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    border-radius: 50%;
+  }
+  
+  .image-1 {
+    left: 0;
+    z-index: 3;
+  }
+  
+  .image-2 {
+    left: 40px;
+    z-index: 2;
+  }
+  .image-3 {
+    left: 80px;
+    z-index: 1;
+  }
