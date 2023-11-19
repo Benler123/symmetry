@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for version 6
 import ChatInterface from '../components/ChatInterface';
 
+
 const ChatPage = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 

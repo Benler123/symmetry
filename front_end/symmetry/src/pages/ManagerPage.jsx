@@ -2,15 +2,16 @@ import React from "react";
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS } from 'chart.js';
 import HeaderComponent from '../components/HeaderComponent';
-import WorkComponent from '../components/WorkComponent';
 import GradientBar from '../components/GradientBar';
 import colors from '../resources/colors';
 import ProfileComponent from '../components/ProfileComponent';
 import bSteeleImage from '../resources/bensteele.svg';
 import tKwokImage from '../resources/tylerkwok.svg';
-import mMasonImage from '../resources/mellisa.svg';
-import kTaylorImage from '../resources/kimmy.svg';
+import mattImage from '../resources/matt.svg';
+import dhruvImage from '../resources/dhruvshah.svg'
 import { useNavigate } from "react-router-dom";
+import ColoredBullets from '../components/ColoredBullets/ColoredBullets';
+
 ChartJS.register(ArcElement);
 function ManagerPage() {
   const navigate = useNavigate();
@@ -25,6 +26,14 @@ function ManagerPage() {
     ['Team Sessions', 2],
     ['Assisting Team Members', 9],
     ['Meetings', 12],
+  ];
+  const bulletPointItems = [
+    { color: '#FFD700', text: '85 Hours Programming' },
+    { color: '#8A2BE2', text: '16 Hours Eebugging' },
+    // Assuming teal represents creative work
+    { color: '#FDB45C', text: '22 Hours Working With a Team' },
+    // Assuming red represents administrative tasks
+    { color: '#949FB1', text: '28 Hours in Meetings' }
   ];
   
   const labels = mockTasks.map(task => task[0]);
@@ -56,8 +65,8 @@ function ManagerPage() {
         <div style={{ width: '21%', backgroundColor: colors.backgroundColor, padding: '20px', flexDirection: "column"}}>
         <ProfileComponent profileSvg={bSteeleImage} name={"Ben Steele"} onClick={() => handleProfileClick("bsteele")} />
           <ProfileComponent profileSvg={tKwokImage} name={"Tyler Kwok"} onClick={() => handleProfileClick("tkwok")} />
-          <ProfileComponent profileSvg={mMasonImage} name={"Maria Mason"} onClick={() => handleProfileClick("mmason")} />
-          <ProfileComponent profileSvg={kTaylorImage} name={"Kim Taylor "} onClick={() => handleProfileClick("ktaylor")} />
+          <ProfileComponent profileSvg={dhruvImage} name={"Dhruv Shah"} onClick={() => handleProfileClick("dshah")} />
+          <ProfileComponent profileSvg={mattImage} name={"Matt Steele"} onClick={() => handleProfileClick("msteele")} />
         </div>
         <div style={{ width: '82%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', color: "white"}}>
@@ -70,8 +79,8 @@ function ManagerPage() {
             <div style={{ width: '50%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Pie data={data} options={chartOptions} />
             </div>
-            <div style={{ width: '50%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <WorkComponent tasks={mockTasks} />
+            <div style={{ color: '#FFFFFF', width: '50%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <ColoredBullets items={bulletPointItems} />
             </div>
           </div>
         </div>

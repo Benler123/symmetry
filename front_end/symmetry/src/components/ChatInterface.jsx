@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
 import ChatBubble from './ChatBubble';
 import agentProfilePic from "../resources/loginGuy.svg"
-import userProfilePic from "../resources/dhruvshah.svg"
+import bSteeleImage from '../resources/bensteele.svg';
+import tKwokImage from '../resources/tylerkwok.svg';
+import mattImage from '../resources/matt.svg';
+import dhruvImage from '../resources/dhruvshah.svg'
 
-function ChatInterface() {
+function ChatInterface({ userName }) {
   const [message, setMessage] = useState('');
   // Adding a welcome message to the initial state of chatHistory
+  const getUserProfilePic = (userName) => {
+    switch (userName) {
+      case 'bSteele':
+        return bSteeleImage;
+      case 'tKwok':
+        return tKwokImage;
+      case 'matt':
+        return mattImage;
+      case 'dhruv':
+        return dhruvImage;
+      default:
+        return agentProfilePic; // default image if user is not recognized
+    }
+  };
   const [chatHistory, setChatHistory] = useState([
     { message: "Hello! I'm here to help you keep track of all your teammates! How can I help? ", isReceived: true }
   ]);
@@ -58,7 +75,7 @@ function ChatInterface() {
           key={index}
           message={chat.message}
           isReceived={chat.isReceived}
-          profilePic={chat.isReceived ? agentProfilePic : userProfilePic}
+          profilePic={chat.isReceived ? getUserProfilePic(userName) : agentProfilePic}
           />
         ))}
       </div>
