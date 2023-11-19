@@ -1,6 +1,7 @@
 from google.cloud.sql.connector import Connector
 import sqlalchemy
 from queries import *
+from datetime import datetime, timedelta
 
 project_id = "fast-gate-405518"
 region = "us-central1"
@@ -59,11 +60,10 @@ def insert_batch_metadata(device, timestamp):
     text_string = text_string.replace(":timestamp", "\"" + timestamp + "\"")
 
     insert_primary = sqlalchemy.text(
-        "INSERT INTO data (device, timestamp) VALUES (:device, :timestamp)",
+        text_string,
     )
 
-    db_conn.execute(insert_primary, parameters={"device": device,
-                                                "timestamp" :timestamp})
+    db_conn.execute(insert_primary)
     
     db_conn.commit()
 
@@ -71,12 +71,14 @@ def insert_batch_metadata(device, timestamp):
 def clear_database():
 
     
-    db_conn.execute(sqlalchemy.text(
-        "DELETE FROM data"
-    ))
+
     db_conn.execute(sqlalchemy.text(
         "DELETE FROM ImageTable"
     ))
+    db_conn.execute(sqlalchemy.text(
+        "DELETE FROM data"
+    ))
+
 
     db_conn.execute(sqlalchemy.text("ALTER TABLE data AUTO_INCREMENT = 1;"))
     db_conn.execute(sqlalchemy.text("ALTER TABLE ImageTable AUTO_INCREMENT = 1;"))
@@ -88,18 +90,15 @@ def clear_database():
 
 def insert_batch_image_data(batch_id, description, category, base64_image):
     text_string = "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
-    text_string = text_string.replace(":batch_id", "\"" + batch_id + "\"")
+    text_string = text_string.replace(":batch_id", "\"" + str(batch_id) + "\"")
     text_string = text_string.replace(":description", "\"" + description + "\"")
     text_string = text_string.replace(":category", "\"" + category + "\"")
-    text_string = text_string.replace(":category", "\"" + category + "\"")
+    text_string = text_string.replace(":base64_image", "\"" + base64_image + "\"")
 
 
     insert_images = sqlalchemy.text(text_string)
     
-    db_conn.execute(insert_images, parameters={"batch_id":batch_id, 
-                                               "description": description,
-                                                "category": category,
-                                                "base64_image": base64_image})
+    db_conn.execute(insert_images)
     
     db_conn.commit()
 
@@ -147,8 +146,39 @@ def retrieve_user_category_data_by_day(user, day):
 
     retrieve_user_info = sqlalchemy.text(text_string)
 
-    result = db_conn.execute(retrieve_user_info, parameters={"user": user, "day": day})
+    result = db_conn.execute(retrieve_user_info)
     dict = {}
     for category, frequency in result:
         dict[category] = frequency
     return dict
+
+
+def retrieve_user_category_data_by_week(user, start_day):
+    date_format = "%Y-%m-%d"
+    curr_date = datetime.strptime(start_day, date_format)
+    week_dict = {}
+    for i in range(7):
+        week_dict[curr_date] = retrieve_user_category_data_by_day(user, date_format)
+        curr_date = curr_date + timedelta(days=1)
+
+
+def retrive_daily_descriptions(user, day):
+    text_string = """
+        SELECT ImageTable.description
+        FROM ImageTable
+        JOIN data ON data.batch_id = ImageTable.batch_id
+        WHERE data.device = (:user)
+        AND DATE(data.timestamp) = (:day)
+    """
+
+    text_string = text_string.replace(":user", "\"" + user + "\"")
+    text_string = text_string.replace(":day", "\"" + day + "\"")
+
+    retrieve_user_info = sqlalchemy.text(text_string)
+
+    return db_conn.execute(retrieve_user_info)
+
+
+# result = retrive_daily_descriptions("Ben Steele", "2023-11-19")
+# for row in result:
+#     print(row)
