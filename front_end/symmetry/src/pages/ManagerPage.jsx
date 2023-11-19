@@ -11,6 +11,7 @@ import mattImage from '../resources/matt.svg';
 import dhruvImage from '../resources/dhruvshah.svg'
 import { useNavigate } from "react-router-dom";
 import ColoredBullets from '../components/ColoredBullets/ColoredBullets';
+import Footer from "../components/footer";
 
 ChartJS.register(ArcElement);
 function ManagerPage() {
@@ -29,7 +30,7 @@ function ManagerPage() {
   ];
   const bulletPointItems = [
     { color: '#FFD700', text: '85 Hours Programming' },
-    { color: '#8A2BE2', text: '16 Hours Eebugging' },
+    { color: '#8A2BE2', text: '16 Hours Debugging' },
     // Assuming teal represents creative work
     { color: '#FDB45C', text: '22 Hours Working With a Team' },
     // Assuming red represents administrative tasks
@@ -59,32 +60,48 @@ function ManagerPage() {
     maintainAspectRatio: false, 
   };
   return (
-    <div style={{ backgroundColor: colors.backgroundColor }}>
+    <div style={{ 
+      display: 'flex', 
+      flexDirection: 'column', 
+      minHeight: '100vh', // Ensuring the container takes at least the full viewport height
+      backgroundColor: colors.backgroundColor 
+    }}>
       <HeaderComponent />
-      <div style={{ display: 'flex' }}>
+      <div style={{ 
+        flex: 1, // Allows this div to grow and fill available space
+        display: 'flex'
+        // ... other styles ...
+      }}>
         <div style={{ width: '21%', backgroundColor: colors.backgroundColor, padding: '20px', flexDirection: "column"}}>
         <ProfileComponent profileSvg={bSteeleImage} name={"Ben Steele"} onClick={() => handleProfileClick("bsteele")} />
           <ProfileComponent profileSvg={tKwokImage} name={"Tyler Kwok"} onClick={() => handleProfileClick("tkwok")} />
           <ProfileComponent profileSvg={dhruvImage} name={"Dhruv Shah"} onClick={() => handleProfileClick("dshah")} />
           <ProfileComponent profileSvg={mattImage} name={"Matt Steele"} onClick={() => handleProfileClick("msteele")} />
         </div>
-        <div style={{ width: '82%', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ width: '79%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', color: "white"}}>
           <GradientBar value={104} backgroundColor={colors.backgroundColor} width={"80%"} />
           <h1 style={{ textAlign: 'left' }}>Your team spent 197 Cumulative Hours This week on Their Tasks</h1>
           <GradientBar value={200} backgroundColor={colors.backgroundColor} width={'60%'}/>
           <h1 style={{ textAlign: 'left' }}>Your team was focused for 152 Cumulative Hours this week</h1>
         </div>
-          <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', display: 'flex', alignItems: 'center' }}>
-            <div style={{ width: '50%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', display: 'flex', alignItems: 'center' }}>
+            <div style={{ width: '55%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}> {/* Adjusted width and added paddingRight */}
               <Pie data={data} options={chartOptions} />
             </div>
-            <div style={{ color: '#FFFFFF', width: '50%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-            <ColoredBullets items={bulletPointItems} />
+            <div style={{ color: '#FFFFFF', width: '45%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', transform: 'translateX(-90px)',}}> {/* Adjusted width and added paddingLeft */}
+              <ColoredBullets items={bulletPointItems} />
             </div>
           </div>
         </div>
+        {/* Your teammates profiles or other content */}
       </div>
+      <Footer style={{ 
+          position: 'absolute', // Absolute positioning
+          bottom: '0', // Positioned at the bottom
+          width: '100%', // Ensuring footer stretches across the width
+          // Other styles for your footer
+      }}/>
     </div>
   );
 }

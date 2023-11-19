@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for version 6
 import ChatInterface from '../components/ChatInterface';
+import Footer from '../components/footer';
 
 
 const ChatPage = () => {
@@ -12,7 +13,7 @@ const ChatPage = () => {
       flexDirection: 'column',
       justifyContent: 'center',
       alignItems: 'center',
-      height: '100vh',
+      height: '121vh',
       position: 'relative'
     }}>
       <div style={{
@@ -32,6 +33,7 @@ const ChatPage = () => {
       <div style={{ width: "50%", height: "60%" }}>
         <ChatInterface/>
       </div>
+      <Footer/>
     </div>
   );
 }

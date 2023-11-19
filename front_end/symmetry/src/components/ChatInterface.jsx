@@ -1,12 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChatBubble from './ChatBubble';
 import agentProfilePic from "../resources/loginGuy.svg"
 import bSteeleImage from '../resources/bensteele.svg';
 import tKwokImage from '../resources/tylerkwok.svg';
 import mattImage from '../resources/matt.svg';
 import dhruvImage from '../resources/dhruvshah.svg'
+import logo from '../resources/symLogo.svg'
 
 function ChatInterface({ userName }) {
+  useEffect(() => {
+    // Prevent scrolling when the component mounts
+    document.body.style.overflow = 'hidden';
+
+    // Re-enable scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
   const [message, setMessage] = useState('');
   // Adding a welcome message to the initial state of chatHistory
   const getUserProfilePic = (userName) => {

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import colors from '../resources/colors';
 import logo from "../resources/symLogo.svg"
 import loginImage from "../resources/loginGuy.svg"
+import Footer from '../components/footer';
 
 const Home = () => {
     const [username, setUsername] = useState('');
@@ -24,6 +25,7 @@ const Home = () => {
             justifyContent: "flex-start",
             backgroundColor: colors.backgroundColor
         }}>
+            <div style={{ width: '100%', flexGrow: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
             <img
                 style={{margin: "20px 0", maxWidth: "15%", height: "auto"}}
                 src={logo}
@@ -83,6 +85,8 @@ const Home = () => {
             >
                 Sign In
             </button>
+            </div>
+            <Footer /> {/* Place Footer component here */}
         </div>
     );
 };
