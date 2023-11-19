@@ -9,7 +9,6 @@ const ProfileComponent = ({ profileSvg, name, onClick }) => {
         justifyContent: 'left',
         color: "#FFFFFF",
         fontSize: "1.5em",
-        marginBottom: "3vh",
         cursor: "pointer" 
       }}
       onClick={() => onClick(name)}

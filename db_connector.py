@@ -54,6 +54,10 @@ def initialize_database():
 def insert_batch_metadata(device, timestamp):
 
     # insert data into our ratings table
+    text_string = "INSERT INTO data (device, timestamp) VALUES (:device, :timestamp)"
+    text_string = text_string.replace(":device", "\"" + device + "\"")
+    text_string = text_string.replace(":timestamp", "\"" + timestamp + "\"")
+
     insert_primary = sqlalchemy.text(
         "INSERT INTO data (device, timestamp) VALUES (:device, :timestamp)",
     )
@@ -74,10 +78,6 @@ def clear_database():
         "DELETE FROM ImageTable"
     ))
 
-    reset_counter = sqlalchemy.text(
-        "ALTER TABLE (:table) AUTO_INCREMENT = 1;"
-    )
-
     db_conn.execute(sqlalchemy.text("ALTER TABLE data AUTO_INCREMENT = 1;"))
     db_conn.execute(sqlalchemy.text("ALTER TABLE ImageTable AUTO_INCREMENT = 1;"))
 
@@ -87,9 +87,14 @@ def clear_database():
 
 
 def insert_batch_image_data(batch_id, description, category, base64_image):
-    insert_images = sqlalchemy.text(
-        "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
-        )
+    text_string = "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
+    text_string = text_string.replace(":batch_id", "\"" + batch_id + "\"")
+    text_string = text_string.replace(":description", "\"" + description + "\"")
+    text_string = text_string.replace(":category", "\"" + category + "\"")
+    text_string = text_string.replace(":category", "\"" + category + "\"")
+
+
+    insert_images = sqlalchemy.text(text_string)
     
     db_conn.execute(insert_images, parameters={"batch_id":batch_id, 
                                                "description": description,
@@ -113,29 +118,34 @@ def retrieve_all_image_table():
     return db_conn.execute(retrieve_image_table)
 
 def retrieve_user_data(user):
-    retrieve_user_info = sqlalchemy.text("""
+    text_string = """
         SELECT ImageTable.category, COUNT(*) as category_count
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
-        WHERE data.device = (:user) AND 
+        WHERE data.device = ###user###
         GROUP BY ImageTable.category;
-    """)
-    
-    result = db_conn.execute(retrieve_user_info, parameters={"user": user})
+    """
+    text_string = text_string.replace("###user###", "\"" + user + "\"")
+    retrieve_user_info = sqlalchemy.text(text_string)
+    result = db_conn.execute(retrieve_user_info)
     dict = {}
     for category, frequency in result:
         dict[category] = frequency
     return dict
 
 def retrieve_user_category_data_by_day(user, day):
-    retrieve_user_info = sqlalchemy.text("""
+    text_string = """
         SELECT ImageTable.category, COUNT(*) as category_count
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
         WHERE data.device = (:user)
         AND DATE(data.timestamp) = (:day)
         GROUP BY ImageTable.category;
-    """)
+    """
+    text_string = text_string.replace(":user", "\"" + user + "\"")
+    text_string = text_string.replace(":day", "\"" + day + "\"")
+
+    retrieve_user_info = sqlalchemy.text(text_string)
 
     result = db_conn.execute(retrieve_user_info, parameters={"user": user, "day": day})
     dict = {}
