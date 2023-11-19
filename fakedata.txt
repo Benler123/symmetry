@@ -1,0 +1,434 @@
+For the first image:
+
+Activity: Coding
+Description: Visual Studio Code is open with a file named "test.ipynb". The user appears to have just started typing with the content "bob is funbasn adsm," which does not seem to be code but more likely just input testing.
+
+For the second image:
+
+Activity: Communicating
+Description: Microsoft Teams is open with the chat interface visible. The user is currently in a chat with "Gastaldi, Lorenzo" but has not yet written a message.
+
+For the third image:
+
+Activity: Browsing
+Description: A YouTube video is playing, titled "Chill Night Drives" by the user "SilverReaper." It looks like the video is about driving with lo-fi music for a relaxing experience.
+
+For the fourth image:
+
+Activity: Browsing
+Description: The web browser is displaying Instagram with the user's profile logged in. There is a photograph shown in the main feed of a person celebrating in a swimming pool.
+
+For the fifth image:
+
+Activity: Browsing
+Description: The Nike online store is open in a web browser with the Nike Metcon 9 Men's Workout Shoes product page displayed. The page is offering an extra 30% off as a daily offer for members.
+
+For image 6:  
+Activity: Coding  
+Description: A Python script named "hello_world.py" is open in Visual Studio Code. The screen shows code for a basic print statement and a function definition. The user is adding comments to describe the function.
+
+For image 7:  
+Activity: Meeting  
+Description: Google Meet interface with a meeting titled "Dev Team Update." The user is sharing their screen, showing a PowerPoint presentation about recent project milestones.
+
+For image 8:  
+Activity: Coding  
+Description: The user is editing "hello_world.py" in Visual Studio Code. The screen shows an error message, indicating a syntax error in the code. The user is in the process of debugging.
+
+For image 9:  
+Activity: Communicating  
+Description: Slack is open, and the user is in a conversation with a colleague named "Emily Zhao." They are discussing a bug in the "hello_world.py" script.
+
+For image 10:  
+Activity: Browsing  
+Description: The user is on Stack Overflow, looking at a question about Python syntax errors. The question closely matches the issue they are facing in their "hello_world.py" script.
+
+For image 11:  
+Activity: Meeting  
+Description: Microsoft Teams is open with a meeting titled "Sprint Planning." The user's camera is on, and they appear to be actively participating in the meeting.
+
+For image 12:  
+Activity: Coding  
+Description: The user is working in "hello_world.py" on Visual Studio Code. The script now includes a complex function, and the user is typing a new line of code.
+
+For image 13:  
+Activity: Communicating  
+Description: An email client is open, showing a draft email to a colleague asking for help with the "hello_world.py" script. The email includes an attached file of the script.
+
+For image 14:  
+Activity: Browsing  
+Description: A browser is open on a tutorial website, showing a Python tutorial for beginners. The page focuses on basic programming concepts.
+
+For image 15:  
+Activity: Coding  
+Description: Visual Studio Code is displaying "hello_world.py". The script now runs successfully, and the output "Hello World!" is visible in the terminal.
+
+For image 16:  
+Activity: Meeting  
+Description: Zoom interface showing a retrospective meeting with the development team. The user is presenting a slide about lessons learned from the recent coding sprint.
+
+For image 17:  
+Activity: Communicating  
+Description: A chat window in Microsoft Teams is open. The user is discussing the next steps for the project with their manager.
+
+For image 18:  
+Activity: Coding  
+Description: The user is refactoring "hello_world.py" in Visual Studio Code. They are optimizing the code and adding more comments for clarity.
+
+For image 19:  
+Activity: Browsing  
+Description: The user is on GitHub, reviewing a repository related to Python programming. They appear to be searching for code examples.
+
+For image 20:  
+Activity: Meeting  
+Description: The user is in a virtual coffee break with colleagues on Google Meet, taking a short break from coding.
+
+For image 21:  
+Activity: Coding  
+Description: Visual Studio Code is open with "hello_world.py". The user is implementing a new feature that takes user input and prints a personalized greeting.
+
+For image 22:  
+Activity: Meeting  
+Description: A screen share in a Zoom call showing a code review session. The user is presenting their "hello_world.py" script for feedback from colleagues.
+
+For image 23:  
+Activity: Communicating  
+Description: The user is sending a message on Slack, asking for suggestions on how to improve their "hello_world.py" script.
+
+For image 24:  
+Activity: Coding  
+Description: The "hello_world.py" file is open, and the user is testing a newly added exception handling block to manage input errors.
+
+For image 25:  
+Activity: Browsing  
+Description: The user is on a coding forum, reading a post about best practices in Python coding. They have "hello_world.py" minimized in the background.
+
+For image 26:  
+Activity: Meeting  
+Description: Microsoft Teams is showing a one-on-one meeting with a senior developer. The user is receiving mentorship on their Python scripting skills.
+
+For image 27:  
+Activity: Coding  
+Description: "hello_world.py" is open, and the user is now adding a logging feature to track user interactions with the script.
+
+For image 28:  
+Activity: Communicating  
+Description: An email is being composed to a mentor, attaching the latest version of "hello_world.py" and seeking feedback.
+
+For image 29:  
+Activity: Browsing  
+Description: The user is researching Python libraries on a web browser, with several tabs open related to Python documentation.
+
+For image 30:  
+Activity: Meeting  
+Description: The user is in a virtual team lunch over Google Meet, taking a break from coding. The screen shows casual conversation among team members.
+
+For image 31:  
+Activity: Coding  
+Description: In Visual Studio Code, "hello_world.py" is being expanded with additional print statements to make the output more user-friendly.
+
+For image 32:  
+Activity: Communicating  
+Description: The user is on a video call with a colleague, discussing potential improvements to the "hello_world.py" script.
+
+For image 33:  
+Activity: Coding  
+Description: The user is integrating a simple GUI into "hello_world.py" using a Python library, as seen on Visual Studio Code.
+
+For image 34:  
+Activity: Browsing  
+Description: The user is looking at Python GUI frameworks on their browser, with multiple tabs open to compare options.
+
+For image 35:  
+Activity: Meeting  
+Description: The user is attending a webinar on advanced Python programming, visible on their screen in a Zoom meeting.
+
+For image 36:  
+Activity: Coding  
+Description: Visual Studio Code shows "hello_world.py" being optimized for performance. The user is replacing certain parts of the code with more efficient algorithms.
+
+For image 37:  
+Activity: Communicating  
+Description: A chat in Microsoft Teams shows the user discussing the performance improvements in "hello_world.py" with a colleague.
+
+For image 38:  
+Activity: Meeting  
+Description: The user is in a virtual meeting on Google Meet, discussing the roadmap for further development of their Python projects.
+
+For image 39:  
+Activity: Coding  
+Description: "hello_world.py" in Visual Studio Code now includes comments for each function, improving the readability and documentation of the code.
+
+For image 40:  
+Activity: Browsing  
+Description: The user's browser is open to a Python coding challenge website. They are attempting a challenge related to basic Python syntax.
+
+For image 41:  
+Activity: Meeting  
+Description: Zoom is open with a screen share, showing a peer-review session. The user's "hello_world.py" script is being critiqued by colleagues.
+
+For image 42:  
+Activity: Coding  
+Description: The user is writing unit tests for "hello_world.py" in Visual Studio Code, ensuring that all functions work as expected.
+
+For image 43:  
+Activity: Communicating  
+Description: An ongoing email thread is visible, where the user is seeking advice from a more experienced developer on unit testing in Python.
+
+For image 44:  
+Activity: Browsing  
+Description: The user is on a documentation site, looking up best practices for writing unit tests in Python.
+
+For image 45:  
+Activity: Meeting  
+Description: A Microsoft Teams meeting titled "Code Quality Workshop" is in progress, with the user actively participating in a discussion about maintaining high standards in coding.
+
+For image 46:  
+Activity: Coding  
+Description: Visual Studio Code displays "hello_world.py" with newly added comments explaining the purpose of each unit test.
+
+For image 47:  
+Activity: Communicating  
+Description: Slack shows the user discussing the outcomes of the unit tests with their development team, highlighting areas for improvement.
+
+For image 48:  
+Activity: Meeting  
+Description: The user is in a Zoom call titled "Python Best Practices", where various advanced programming techniques are being discussed.
+
+For image 49:  
+Activity: Coding  
+Description: The user is refactoring parts of "hello_world.py" to make the code more modular and easier to maintain.
+
+For image 50:  
+Activity: Browsing  
+Description: The user's web browser is open to a blog about Python programming, where they are reading an article on modular coding.
+
+For image 51:  
+Activity: Meeting  
+Description: Google Meet is showing a team brainstorming session, where the user is presenting ideas for new features in "hello_world.py".
+
+For image 52:  
+Activity: Coding  
+Description: In Visual Studio Code, the user is implementing a new feature in "hello_world.py" that allows for logging user interactions.
+
+For image 53:  
+Activity: Communicating  
+Description: The user is sending a message on Microsoft Teams, discussing the implementation of the new feature in "hello_world.py".
+
+For image 54:  
+Activity: Browsing  
+Description: A web browser is open on a Python tutorial page, with the user learning about advanced logging techniques.
+
+For image 55:  
+Activity: Meeting  
+Description: A Zoom call is in session titled "Weekly Progress Update", where the user is reporting on the development of "hello_world.py".
+
+For image 56:  
+Activity: Coding  
+Description: Visual Studio Code displays "hello_world.py" with a new section for error handling and exceptions being added.
+
+For image 57:  
+Activity: Communicating  
+Description: The user is emailing a mentor, asking for feedback on the error handling approach in "hello_world.py".
+
+For image 58:  
+Activity: Meeting  
+Description: Microsoft Teams shows a meeting with a user interface designer, discussing potential GUI improvements for "hello_world.py".
+
+For image 59:  
+Activity: Coding  
+Description: The user is integrating a simple graphical interface into "hello_world.py" using a Python GUI framework.
+
+For image 60:  
+Activity: Browsing  
+Description: The user's browser shows a site with Python GUI examples, which the user is using as inspiration for their project.
+
+For image 61:  
+Activity: Meeting  
+Description: A virtual team-building activity is visible on Google Meet, with the development team participating in an online quiz.
+
+For image 62:  
+Activity: Coding  
+Description: "hello_world.py" on Visual Studio Code now includes a function to save user inputs to a file for later analysis.
+
+For image 63:  
+Activity: Communicating  
+Description: Slack displays a discussion about the ethics of data storage and user privacy in relation to the new feature in "hello_world.py".
+
+For image 64:  
+Activity: Browsing  
+Description: The user is on a legal advice website, reading about data privacy laws relevant to their "hello_world.py" project.
+
+For image 65:  
+Activity: Meeting  
+Description: A Microsoft Teams call titled "Data Privacy Compliance" shows the user discussing legal considerations for their project.
+
+For image 66:  
+Activity: Coding  
+Description: Visual Studio Code is showing "hello_world.py" with added encryption for stored user data to enhance privacy.
+
+For image 67:  
+Activity: Communicating  
+Description: An email draft is visible where the user is explaining the data encryption measures to a colleague.
+
+For image 68:  
+Activity: Meeting  
+Description: The user is attending an online security workshop, as seen in a Zoom interface, to learn about securing Python applications.
+
+For image 69:  
+Activity: Coding  
+Description: The user is adding comments in "hello_world.py" explaining the encryption process for future reference.
+
+For image 70:  
+Activity: Browsing  
+Description: The browser shows a Python encryption library's documentation, which the user is studying to improve their code.
+
+For image 71:  
+Activity: Meeting  
+Description: A screen share in a Google Meet call shows a code walkthrough, where the user is explaining their encryption approach.
+
+For image 72:  
+Activity: Coding  
+Description: In Visual Studio Code, "hello_world.py" is being updated with a new user interface element to display encryption status.
+
+For image 73:  
+Activity: Communicating  
+Description: The user is participating in a forum discussion about UI design best practices for Python applications.
+
+For image 74:  
+Activity: Meeting  
+Description: A Microsoft Teams meeting titled "UI/UX Feedback Session" shows the user receiving critiques on their GUI design.
+
+For image 75:  
+Activity: Coding  
+Description: The user is revising the GUI of "hello_world.py" to make it more user-friendly, based on the feedback received.
+
+For image 76:  
+Activity: Browsing  
+Description: The user's web browser displays a gallery of award-winning GUI designs for inspiration.
+
+For image 77:  
+Activity: Meeting  
+Description: Zoom displays a meeting titled "End-User Experience", where the user is learning about enhancing user engagement.
+
+For image 78:  
+Activity: Coding  
+Description: Visual Studio Code shows the user testing different color schemes for the GUI in "hello_world.py".
+
+For image 79:  
+Activity: Communicating  
+Description
+
+: Slack shows a conversation about color psychology in UI design, with the user seeking opinions on their color choices.
+
+For image 80:  
+Activity: Meeting  
+Description: A webinar on advanced Python features is playing in Google Meet, with the user taking notes for future reference.
+
+For image 81:  
+Activity: Coding  
+Description: "hello_world.py" is being expanded with a feature to customize the GUI theme based on user preference.
+
+For image 82:  
+Activity: Communicating  
+Description: An email is being sent to a UI expert, asking for a review of the latest GUI updates in "hello_world.py".
+
+For image 83:  
+Activity: Browsing  
+Description: The user is researching on advanced Python GUI frameworks, comparing different libraries for future projects.
+
+For image 84:  
+Activity: Meeting  
+Description: Microsoft Teams shows a project status update meeting, where the user is presenting the latest version of "hello_world.py".
+
+For image 85:  
+Activity: Coding  
+Description: Visual Studio Code displays the user adding an interactive tutorial to "hello_world.py" for new users.
+
+For image 86:  
+Activity: Communicating  
+Description: The user is discussing the tutorial feature with colleagues on Slack, brainstorming ways to make it more engaging.
+
+For image 87:  
+Activity: Meeting  
+Description: A Zoom call titled "Innovative Coding Techniques" is in session, with the user learning about new programming trends.
+
+For image 88:  
+Activity: Coding  
+Description: The user is adding a feature to "hello_world.py" that allows users to submit feedback directly through the GUI.
+
+For image 89:  
+Activity: Browsing  
+Description: The user is on a web page about user feedback mechanisms, looking for best practices to implement in their project.
+
+For image 90:  
+Activity: Meeting  
+Description: Google Meet shows a user testing session, with colleagues trying out the new features of "hello_world.py" and providing feedback.
+
+For image 91:  
+Activity: Coding  
+Description: Visual Studio Code shows "hello_world.py" with the user implementing changes based on the feedback from the testing session.
+
+For image 92:  
+Activity: Communicating  
+Description: Microsoft Teams displays a conversation where the user is thanking colleagues for their feedback and discussing future improvements.
+
+For image 93:  
+Activity: Meeting  
+Description: A virtual meet-up for Python developers is visible on Zoom, where the user is networking and sharing experiences.
+
+For image 94:  
+Activity: Coding  
+Description: The user is working on optimizing the code in "hello_world.py" for better performance and readability.
+
+For image 95:  
+Activity: Browsing  
+Description: The user is researching optimization techniques for Python on various programming blogs and forums.
+
+For image 96:  
+Activity: Meeting  
+Description: A screen share in a Microsoft Teams meeting shows a peer coding session, with the user receiving real-time feedback.
+
+For image 97:  
+Activity: Coding  
+Description: Visual Studio Code displays "hello_world.py" where the user is adding a feature to track the execution time of the script.
+
+For image 98:  
+Activity: Communicating  
+Description: Slack shows the user asking for advice on efficient time tracking in Python scripts.
+
+For image 99:  
+Activity: Meeting  
+Description: The user is attending an online course on advanced Python, visible in a Zoom interface, focusing on performance optimization.
+
+For image 100:  
+Activity: Coding  
+Description: The user is implementing a new algorithm in "hello_world.py" to enhance the script's functionality.
+
+For image 101:  
+Activity: Browsing  
+Description: The user's web browser shows a coding challenge site where they are solving advanced Python problems.
+
+For image 102:  
+Activity: Meeting  
+Description: Google Meet displays a collaborative coding workshop, where the user is learning and sharing tips with other developers.
+
+For image 103:  
+Activity: Coding  
+Description: Visual Studio Code shows "hello_world.py" with the user adding a section for user customization options.
+
+For image 104:  
+Activity: Communicating  
+Description: The user is discussing the new customization features in "hello_world.py" with a colleague over Microsoft Teams.
+
+For image 105:  
+Activity: Meeting  
+Description: A Zoom call titled "Tech Talk: Python Innovations" shows the user engaging with a discussion on the latest trends in Python.
+
+For image 106:  
+Activity: Coding  
+Description: The user is adding a version control system to "hello_world.py", integrating Git functionality for better project management.
+
+For image 107:  
+Activity: Browsing  
+Description: The user's browser is open to a Git tutorial, where they are learning about best practices for version control in Python projects.
