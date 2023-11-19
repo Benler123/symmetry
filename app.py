@@ -69,7 +69,6 @@ def get_week_user_data(user, start_date):
 
 @app.get("/daily_user_descriptions/{user}/{start_date}")
 def get_daily_user_descriptions(user, start_date):
-    start_date ="2023-11-19"
     return retrive_daily_descriptions(user, start_date)
 
 

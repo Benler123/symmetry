@@ -157,8 +157,9 @@ def retrieve_user_category_data_by_week(user, start_day):
     date_format = "%Y-%m-%d"
     curr_date = datetime.strptime(start_day, date_format)
     week_dict = {}
-    for i in range(7):
-        week_dict[curr_date] = retrieve_user_category_data_by_day(user, curr_date.strftime("%Y-%m-%d"))
+    for letter in ["M", "T", "W", "TR", "F"]:
+        week_dict[letter] = {}
+        week_dict[letter]["activities"] = retrieve_user_category_data_by_day(user, curr_date.strftime("%Y-%m-%d"))
         curr_date = curr_date + timedelta(days=1)
     return week_dict
 
@@ -180,6 +181,8 @@ def retrive_daily_descriptions(user, day):
     descriptions = []
     for row in result:
         descriptions.append(row[0])
+    
+
     return descriptions
 
 
