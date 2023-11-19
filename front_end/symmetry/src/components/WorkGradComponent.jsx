@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import colors from '../resources/colors';
-const WorkGradComponent = ({ value, backgroundColor }) => {
+const WorkGradComponent = ({ value, backgroundColor, focusedWorkPercent }) => {
   const [opacity, setOpacity] = useState(0);
   const fillerBackground = `linear-gradient(to right, ${colors.green}, ${colors.red})`;
   const fillerStyles = {
@@ -15,10 +15,11 @@ const WorkGradComponent = ({ value, backgroundColor }) => {
   };
 
   const containerStyles = {
-    height: '15%',
+    maxHeight: '5vh',
+    height: "2.5vh",
     backgroundColor: backgroundColor || '#e0e0de',
-    borderRadius: 5,
-    overflow: 'hidden'
+    borderRadius: 1,
+    overflow: 'hidden',
   };
 
   useEffect(() => {
@@ -28,7 +29,8 @@ const WorkGradComponent = ({ value, backgroundColor }) => {
   return (
     <div style={{display:"flex", flexDirection: "column", color: "#FFFFFF", fontFamily: "'Inria Sans', sans-serif", fontSize: "1.2em"
   }}>
-      <h4 style={{marginLeft: "10px"}}>78% of Tylers work was focused work</h4>
+      <h4 style={{    transform: 'translateY(20px)'
+,marginLeft: "10px", fontSize: "1.4em"}}>{focusedWorkPercent}% of Your work was focused work</h4>
 
 <div style={containerStyles}>
       <div style={fillerStyles}>
