@@ -59,5 +59,9 @@ def clear_all_data():
 def test():
     return "API WORKED"
 
+@app.get("/get_team_hours")
+def get_team_hours():
+    return {"Coding": 7, "Browsing": 10, "Meeting": 5,  "Communicating": 4, "Scheduling": 12, "Chatting": 10, "Off-Topic" : 3}
+
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8001, debug=True)
