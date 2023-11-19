@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Body, BackgroundTasks
 from typing import List, Dict
 import base64
-from gpt_client import bg_task_completion_export
+from db_connector import bg_task_completion_export
 from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, summarize_day, retrieve_user_category_data_by_week, retrive_daily_descriptions, summarize_week
 import uvicorn
 from prompts import USER_CHAT_PROMPT_PREFIX, USER_CHAT_PROMPT_SUFFIX
@@ -37,7 +37,8 @@ def upload(background_tasks: BackgroundTasks, data = Body(...)):
     if not data.get("images") or len(data.get("images")) == 0:
         raise HTTPException(status_code=400, detail="No Images")
     image_list = data["images"]
-    background_tasks.add_task(bg_task_completion_export, image_list)
+    print("Lol")
+    background_tasks.add_task(bg_task_completion_export, image_list, data.get("user"))
     return
 
 @app.get("/set_capture/{user}/{capture}")
@@ -115,6 +116,7 @@ def get_query_response(user, start_date, data = Body(...)):
     }
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
     return response["choices"][0]["message"]["content"]
+
 @app.get("/summarize_user_descriptions/{user}/{start_date}")
 def summarize_daily_user_descriptions(user, start_date):
     return summarize_day(user, start_date)

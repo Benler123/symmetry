@@ -8,7 +8,7 @@ import requests
 import argparse 
 
 
-TIME_INTERVAL = 30
+TIME_INTERVAL = 5
 
 argparse = argparse.ArgumentParser()
 argparse.add_argument("--server_url", help="The URL of the server to send the images to.")
@@ -18,12 +18,12 @@ args = argparse.parse_args()
 
 
 class ScreenCaptureClient:
-    def __init__(self, server_url="http://localhost:5000/"): 
+    def __init__(self, server_url="http://localhost:8001/"): 
         self.mean = None
         self.median = None 
         self.framerate_supported = None 
         self.time_buffer = []
-        self.server_url = args.server_url
+        self.server_url = server_url if args.server_url is None else args.server_url
         self.user_id = args.userid
         if self.user_id == None: 
             raise Exception("USER ID: NONE -- User ID Missing, try checking the command line arguments.")
@@ -83,10 +83,9 @@ class ScreenCaptureClient:
     def export_to_server(self, interval_images):
         print("Exporting to server.")
         #send the images to the server
-        image_data = {"images": interval_images}
+        image_data = {"images": interval_images, "user": self.user_id}
         try:
             response = requests.post(self.server_url, json=image_data)
-            print(response)
         except:
             print("Here")
 if __name__ == '__main__':

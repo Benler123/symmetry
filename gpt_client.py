@@ -4,6 +4,7 @@ import re
 import json
 from prompts import ACTIVITY_CAPTURE_PROMPT as prompt 
 from prompts import DESCRIPTION_PROMPT as dp
+import time
 # OpenAI API Key
 
 def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_API_KEY")):
@@ -34,6 +35,7 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
         json.dump(payload, f)
     # Sending the request and returning the response
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
+    print(response)
     return response["choices"][0]["message"]["content"]
 
     
@@ -67,7 +69,6 @@ def describe_day(descriptions ,description_prompt=dp, api_key=os.environ.get("OP
     }
 
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
-    print(response)
     return response["choices"][0]["message"]["content"]
 
 def convert(input_string):
@@ -76,6 +77,3 @@ def convert(input_string):
     activities = [{"Activity": activity, "Description": desc.strip()} for activity, desc in matches]
     return activities
 
-def bg_task_completion_export(base_64_image_array):
-    activities = convert(explain_images(base_64_image_array))
-    return activities

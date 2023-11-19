@@ -2,7 +2,8 @@ from google.cloud.sql.connector import Connector
 import sqlalchemy
 from queries import *
 from datetime import datetime, timedelta
-from gpt_client import describe_day
+from gpt_client import *
+import datetime
 
 project_id = "fast-gate-405518"
 region = "us-central1"
@@ -14,6 +15,7 @@ DB_USER = "chef"
 DB_PASS = "food"
 DB_NAME = "symmetry_db"
 
+categories =  ['Coding', 'Browsing', 'Meeting',  'Communicating', 'Scheduling', 'Chatting', 'Off-Topic']
 connector = Connector()
 
 def getconn():
@@ -57,8 +59,10 @@ def insert_batch_metadata(device, timestamp):
 
     # insert data into our ratings table
     text_string = "INSERT INTO data (device, timestamp) VALUES (:device, :timestamp)"
+    print(device)
+    print(timestamp)
     text_string = text_string.replace(":device", "\"" + device + "\"")
-    text_string = text_string.replace(":timestamp", "\"" + timestamp + "\"")
+    text_string = text_string.replace(":timestamp", "\"" + timestamp.strftime("%Y-%m-%d") + "\"")
 
     insert_primary = sqlalchemy.text(
         text_string,
@@ -91,10 +95,10 @@ def clear_database():
 
 def insert_batch_image_data(batch_id, description, category, base64_image):
     text_string = "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
-    text_string = text_string.replace(":batch_id", "\"" + str(batch_id) + "\"")
+    text_string = text_string.replace(":batch_id",  "\"" + str(batch_id.fetchone()[0]) + "\"")
     text_string = text_string.replace(":description", "\"" + description + "\"")
-    text_string = text_string.replace(":category", "\"" + category + "\"")
-    text_string = text_string.replace(":base64_image", "\"" + base64_image + "\"")
+    text_string = text_string.replace(":category", "\"" + category.replace("\n", "") + "\"")
+    text_string = text_string.replace(":base64_image", "\"" + "SuperSecretCheatCode" + "\"")
 
 
     insert_images = sqlalchemy.text(text_string)
@@ -102,6 +106,7 @@ def insert_batch_image_data(batch_id, description, category, base64_image):
     db_conn.execute(insert_images)
     
     db_conn.commit()
+    return "PENIS"
 
 def retrieve_all_primary():
     retrieve_primary = sqlalchemy.text(
@@ -130,7 +135,8 @@ def retrieve_user_data(user):
     result = db_conn.execute(retrieve_user_info)
     dict = {}
     for category, frequency in result:
-        dict[category] = frequency
+        if category in categories:
+            dict[category] = frequency  
     return dict
 
 def retrieve_user_category_data_by_day(user, day):
@@ -150,7 +156,8 @@ def retrieve_user_category_data_by_day(user, day):
     result = db_conn.execute(retrieve_user_info)
     dict = {}
     for category, frequency in result:
-        dict[category] = frequency
+        if category in categories:
+            dict[category] = frequency
     return dict
 
 
@@ -163,6 +170,10 @@ def retrieve_user_category_data_by_week(user, start_day):
         week_dict[letter]["activities"] = retrieve_user_category_data_by_day(user, curr_date.strftime("%Y-%m-%d"))
         curr_date = curr_date + timedelta(days=1)
     return week_dict
+
+def retrive_curr_batch():
+    t = sqlalchemy.text("SELECT MAX(batch_id) FROM data;")
+    return db_conn.execute(t)
 
 def retrive_daily_descriptions(user, day):
     text_string = """
@@ -198,3 +209,12 @@ def summarize_week(user, start_day):
         summaries[day]["summary"] = summarize_day(user, curr_date.strftime("%Y-%m-%d"))
         curr_date = curr_date + timedelta(days=1)
     return summaries
+
+
+def bg_task_completion_export(base_64_image_array, userid):
+    activities = convert(explain_images(base_64_image_array))
+    print("FINSIHED EXPLAINING")
+    insert_batch_metadata(userid, datetime.datetime.now())
+    for i,activity in enumerate(activities):
+        insert_batch_image_data(retrive_curr_batch(), activity["Description"] ,activity["Activity"], base_64_image_array[i])
+    return activities
