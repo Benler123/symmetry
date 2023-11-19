@@ -113,18 +113,32 @@ def retrieve_all_image_table():
     return db_conn.execute(retrieve_image_table)
 
 def retrieve_user_data(user):
-
     retrieve_user_info = sqlalchemy.text("""
         SELECT ImageTable.category, COUNT(*) as category_count
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
-        WHERE data.device = (:user)
+        WHERE data.device = (:user) AND 
         GROUP BY ImageTable.category;
     """)
     
     result = db_conn.execute(retrieve_user_info, parameters={"user": user})
     dict = {}
     for category, frequency in result:
-        dict["category"] = frequency
+        dict[category] = frequency
     return dict
 
+def retrieve_user_category_data_by_day(user, day):
+    retrieve_user_info = sqlalchemy.text("""
+        SELECT ImageTable.category, COUNT(*) as category_count
+        FROM ImageTable
+        JOIN data ON data.batch_id = ImageTable.batch_id
+        WHERE data.device = (:user)
+        AND DATE(data.timestamp) = (:day)
+        GROUP BY ImageTable.category;
+    """)
+
+    result = db_conn.execute(retrieve_user_info, parameters={"user": user, "day": day})
+    dict = {}
+    for category, frequency in result:
+        dict[category] = frequency
+    return dict
