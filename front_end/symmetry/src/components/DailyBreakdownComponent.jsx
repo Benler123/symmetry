@@ -4,7 +4,7 @@ import { ArcElement, Chart as ChartJS } from 'chart.js';
 
 ChartJS.register(ArcElement);
 
-function DailyBreakDownComponent() {
+function DailyBreakDownComponent( {selectedDay, setSelectedDay}) {
   const days = ["M", "T", "W", "TR", "F"]; // Array of days
   const dayName = {
     "M": "Monday",
@@ -21,10 +21,17 @@ function DailyBreakDownComponent() {
     "TR": "Thursday is for collaboration and meetings. It's an opportunity to sync with the team and assess progress. The day is geared towards teamwork, sharing ideas, and collectively addressing challenges. It's a crucial time for communication, building consensus, and ensuring that everyone is contributing effectively towards common goals.",
     "F": "Friday is about wrapping up and reflection. It's a time to finish tasks, review the week's achievements, and prepare for the next week. The focus is on closing pending issues, reflecting on accomplishments and learnings, and setting the stage for a seamless transition into the upcoming week. It's also a day for personal and professional growth reflections."
   };
+
+  const percentages = {
+    "M": 26,
+    "T": 34,
+    "W": 17,
+    "TR": 22,
+    "F": 8
+  }
   
 
   // Initialize selectedDay and selectedDaySummary with values for Monday
-  const [selectedDay, setSelectedDay] = useState("M"); // Set "M" for Monday
   const [selectedDaySummary, setSelectedDaySummary] = useState(daySummaries["M"]); // Set Monday's summary
 
   // Function to handle day click
@@ -35,7 +42,7 @@ function DailyBreakDownComponent() {
   const data = {
     labels: ["working", "not"],
     datasets: [{
-      data: [23, 77],
+      data: [percentages[selectedDay], 100 - percentages[selectedDay]],
       backgroundColor: ['#FFFFFF', '#46BFBD'],
       borderWidth: 0,
     }],
@@ -47,7 +54,7 @@ function DailyBreakDownComponent() {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", fontFamily: "'Inria Sans', sans-serif", color: "#FFFFFF" , width: "100%"}}>
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", marginBottom: "20px" , width: "80%"}}>
+      <div style={{ display: "flex", justifyContent: "space-between", padding: "10px", marginTop: "40px" , width: "80%"}}>
         {days.map(day => (
           <div
             key={day}
@@ -62,15 +69,15 @@ function DailyBreakDownComponent() {
           </div>
         ))}
       </div>
-      <div style={{marginBottom: "75px"}}>
-        <p style={{fontSize: "1.4em", maxHeight: "13vh", height: "13vh", marginBottom: "80px"}}>{selectedDaySummary}</p> {/* Display the summary for the selected day */}
+      <div style={{marginBottom: "0px"}}>
+      <p style={{fontSize: "1.4em", maxHeight: "13vh", height: "13vh", marginBottom: "80px", transform: "translateY(-25px)"}}>{selectedDaySummary}</p> {/* Display the summary for the selected day */}
       </div>
 
      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
   <div style={{ width: '70%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center', transform: 'translateX(-120px)' }}>
     <Pie data={data} options={chartOptions} />
   </div>
-  <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up 22% of Tyler's work this week</h3>
+  <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {percentages[selectedDay]}% of Tyler's work this week</h3>
 </div>
 
 
