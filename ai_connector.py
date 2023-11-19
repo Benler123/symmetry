@@ -29,8 +29,6 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
         ],
         "max_tokens": 1024
     }
-    with(open("payload.json", "w")) as f:
-        json.dump(payload, f)
     # Sending the request and returning the response
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
     return response["choices"][0]["message"]["content"]

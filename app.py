@@ -4,6 +4,9 @@ import base64
 from gpt_client import bg_task_completion_export
 from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, retrieve_user_category_data_by_day, retrieve_user_category_data_by_week, retrive_daily_descriptions
 import uvicorn
+from prompts import USER_CHAT_PROMPT_PREFIX, USER_CHAT_PROMPT_SUFFIX
+import requests
+import os
 
 app = FastAPI()
 
@@ -71,6 +74,33 @@ def get_daily_user_descriptions(user, start_date):
     return {"M":"today is monday", "T": "Today is Tuesday", "W": "Today is Wednesday", "R": "Today is Thursdday!", "F": "Today is Friday"}
     # return retrive_daily_descriptions(user, start_date)
 
+@app.get("/day_user_chat/{user}/{start_date}")
+def get_query_response(user, start_date, data = Body(...)): 
+    api_key = os.environ.get("OPENAI_API_KEY")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    desc = retrive_daily_descriptions(user, start_date)
+    desc_prompt = "\n".join(desc)
+    chat_prompt = USER_CHAT_PROMPT_PREFIX + desc_prompt + USER_CHAT_PROMPT_SUFFIX + data.get("query")
+    payload = {
+        "model": "gpt-3.5-turbo-16k",
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": chat_prompt
+                    }
+                ]
+            }
+        ],
+        "max_tokens": 512
+    }
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
+    return response["choices"][0]["message"]["content"]
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8001, debug=True)
