@@ -24,9 +24,12 @@ const ProfilePage = () => {
   const [blockData, setBlockData] = useState({"M":{"summary":"Today was a good day"}});
   const [weekData, setWeekData] = useState({});
   const[activityData, setActivityData] = useState({});
+  const [dataPoints, setDataPoints] = useState([22, 44, 55]);
+
   const [totalHoursPerDay, setTotalHoursPerDay] = useState({});
   const [focusedHoursPerDay, setFocusedHoursPerDay] = useState({});
   const [totalWeeklyHours, setTotalWeeklyHours] = useState(0);
+  const [bulletPointItems, setBulletPointItems] = useState([]);
   
 
   useEffect(() => {
@@ -61,12 +64,31 @@ const ProfilePage = () => {
             newFocusedHours[day] = focusedHours;
             weeklyHours += totalHours;
         });
+        const colors = [
+          '#F7464A', // Red
+          '#46BFBD', // Blue
+          '#FDB45C', // Yellow
+          '#949FB1', // Green
+          '#4D5360', // Purple
+          '#8A2BE2', // Dark Blue
+          '#FFD700', // Gold
+        ];
 
+        const ites = Object.keys(activityTotals).map((key, index) => {
+          const colorIndex = index % colors.length; // Repeat colors if more categories than colors
+          return {
+            color: colors[colorIndex],
+            text: `${activityTotals[key]} Hours ${key}`
+          };
+        });
+        setDataPoints(Object.values(activityTotals))
+
+        setBulletPointItems(ites);
         setTotalHoursPerDay(newTotalHours);
         setFocusedHoursPerDay(newFocusedHours);
         setTotalWeeklyHours(weeklyHours);
         setWeekData(activityTotals);
-      
+        
         
       })
       .catch((error) => console.log(error));
@@ -142,7 +164,6 @@ const ProfilePage = () => {
     "F": 78
   }
   const labels = mockTasks.map(task => task[0]);
-  const dataPoints = mockTasks.map(task => task[1]);
   const data = {
     labels: labels, 
     datasets: [{
@@ -167,14 +188,14 @@ const ProfilePage = () => {
     dShahImage
   ];
 
-  const bulletPointItems = [
-    { color: '#FFD700', text: '12 Hours Debugging' },
-    { color: '#8A2BE2', text: '2 Hours in Team Sessions' },
-    // Assuming teal represents creative work
-    { color: '#FDB45C', text: '4 Hours in Creative Design' },
-    // Assuming red represents administrative tasks
-    { color: '#949FB1', text: '3 Hours on Administrative Tasks' }
-  ];
+  // const bulletPointItems = [
+  //   { color: '#FFD700', text: '12 Hours Debugging' },
+  //   { color: '#8A2BE2', text: '2 Hours in Team Sessions' },
+  //   // Assuming teal represents creative work
+  //   { color: '#FDB45C', text: '4 Hours in Creative Design' },
+  //   // Assuming red represents administrative tasks
+  //   { color: '#949FB1', text: '3 Hours on Administrative Tasks' }
+  // ];
 
   const backButtonStyle = {
     position: 'absolute', // This positions the element relative to its first positioned (not static) ancestor element

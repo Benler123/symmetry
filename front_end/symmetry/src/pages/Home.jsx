@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import colors from '../resources/colors';
 import logo from "../resources/symLogo.svg"
 import loginImage from "../resources/loginGuy.svg"
-import Footer from '../components/footer';
+import LandingFooter from '../components/LandingFooter';
 
 const Home = () => {
     const [username, setUsername] = useState('');
@@ -86,7 +86,7 @@ const Home = () => {
                 Sign In
             </button>
             </div>
-            <Footer /> {/* Place Footer component here */}
+            <LandingFooter /> {/* Place Footer component here */}
         </div>
     );
 };
