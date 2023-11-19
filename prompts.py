@@ -31,3 +31,13 @@ Output:
 Activity: Browsing
 
 Description: Stack overflow is open in the web browser being looked at The current page is looking at how to fix a valueerror in python"""
+
+USER_CHAT_PROMPT_PREFIX = """The following is a list of actions a developer took throughout the day: \n
+"""
+USER_CHAT_PROMPT_SUFFIX = """Respond to the following query based on the actions taken by the developer: \n"""
+
+
+
+DESCRIPTION_PROMPT = """
+Each list of strings represents an employees activities for the day. The strings come in chronological order. Please use this information to summarize the employees day.
+"""

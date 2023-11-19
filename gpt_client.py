@@ -2,7 +2,8 @@ import requests
 import os
 import re 
 import json
-from prompts import ACTIVITY_CAPTURE_PROMPT as prompt
+from prompts import ACTIVITY_CAPTURE_PROMPT as prompt 
+from prompts import DESCRIPTION_PROMPT as dp
 # OpenAI API Key
 
 def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_API_KEY")):
@@ -29,8 +30,44 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
         ],
         "max_tokens": 1024
     }
+    with(open("payload.json", "w")) as f:
+        json.dump(payload, f)
     # Sending the request and returning the response
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
+    return response["choices"][0]["message"]["content"]
+
+    
+def describe_day(descriptions ,description_prompt=dp, api_key=os.environ.get("OPENAI_API_KEY")):
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    }
+    payload = {
+        "model": "gpt-3.5-turbo",
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": description_prompt 
+                    }
+                ]
+            }, {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": ', '.join(str(x) for x in descriptions)
+                    }
+                ]
+            }
+        ],
+        "max_tokens": 1024
+    }
+
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
+    print(response)
     return response["choices"][0]["message"]["content"]
 
 def convert(input_string):
