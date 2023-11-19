@@ -80,8 +80,6 @@ const ProfilePage = () => {
         '#46BFBD', // Blue
         '#FDB45C', // Yellow
         '#949FB1', // Green
-        '#4D5360', // Purple
-        // Add more colors if needed, matching the Figma design
       ],
       borderWidth: 0,
     }],
@@ -101,9 +99,9 @@ const ProfilePage = () => {
     { color: '#FFD700', text: '12 Hours Debugging' },
     { color: '#8A2BE2', text: '2 Hours in Team Sessions' },
     // Assuming teal represents creative work
-    { color: '#00CED1', text: '4 Hours in Creative Design' },
+    { color: '#FDB45C', text: '4 Hours in Creative Design' },
     // Assuming red represents administrative tasks
-    { color: '#FF4500', text: '3 Hours on Administrative Tasks' }
+    { color: '#949FB1', text: '3 Hours on Administrative Tasks' }
   ];
   
 
