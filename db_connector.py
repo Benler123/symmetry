@@ -122,5 +122,9 @@ def retrieve_user_data(user):
         GROUP BY ImageTable.category;
     """)
     
-    return db_conn.execute(retrieve_user_info, parameters={"user": user})
+    result = db_conn.execute(retrieve_user_info, parameters={"user": user})
+    dict = {}
+    for category, frequency in result:
+        dict["category"] = frequency
+    return dict
 

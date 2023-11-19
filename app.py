@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException, Body, BackgroundTasks
 from typing import List, Dict
 import base64
 from gpt_client import bg_task_completion_export
+from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database
 import uvicorn
 
 app = FastAPI()
@@ -37,10 +38,22 @@ def set_access(user: str,capture: str):
     raise HTTPException(status_code=400, detail="Input must be yes/y or no/n")
 
 @app.get("/user_data/{user}") 
-def retrive_user_data(user):
+def get_user_data(user):
     if not user:
         return "must input a user"
-    
+    return retrieve_user_data(user)
+
+@app.get("/all_meta_data")
+def get_all_meta_data():
+    return retrieve_all_primary()
+
+@app.get("/all_image_data")
+def get_all_image_data():
+    return retrieve_all_image_table()
+
+@app.post("/clear")
+def clear_all_data():
+    clear_database()
 
 @app.get("/test")
 def test():
