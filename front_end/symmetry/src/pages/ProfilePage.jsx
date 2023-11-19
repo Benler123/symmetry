@@ -173,6 +173,9 @@ const ProfilePage = () => {
         '#46BFBD', // Blue
         '#FDB45C', // Yellow
         '#949FB1', // Green
+        '#4D5360', // Purple
+        '#8A2BE2', // Dark Blue
+        '#FFD700', // Gold
       ],
       borderWidth: 0,
     }],
