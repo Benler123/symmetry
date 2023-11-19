@@ -76,7 +76,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
         <div style={{ width: '80%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', transform: 'translateX(-120px)' }}>
           <Pie data={data} options={chartOptions} />
         </div>
-        <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {dailyHours[selectedDay] / weeklyTotal * 100}% of {personName}'s work this week</h3>
+        <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {Math.round(dailyHours[selectedDay] / weeklyTotal * 100,4)}% of {personName}'s work this week</h3>
       </div>
     </div>
   );

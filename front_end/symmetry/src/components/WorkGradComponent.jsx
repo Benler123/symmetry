@@ -30,7 +30,7 @@ const WorkGradComponent = ({ backgroundColor, focusedWorkPercent }) => {
     <div style={{display:"flex", flexDirection: "column", color: "#FFFFFF", fontFamily: "'Inria Sans', sans-serif", fontSize: "1.2em"
   }}>
       <h4 style={{    transform: 'translateY(20px)'
-,marginLeft: "10px", fontSize: "1.4em"}}>{focusedWorkPercent}% of Your work was focused work</h4>
+,marginLeft: "10px", fontSize: "1.4em"}}>{Math.round(focusedWorkPercent,4)}% of your work was focused work</h4>
 
 <div style={containerStyles}>
       <div style={fillerStyles}>

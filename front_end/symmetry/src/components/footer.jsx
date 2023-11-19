@@ -19,7 +19,7 @@ const Footer = () => {
       <Link to="/chat" style={{ textDecoration: 'none', color: 'inherit' }}> {/* Add style here to remove underline and change color */}
   <>
     <img style={{ maxHeight: "20px" }} src={arrow} />
-    <span style={{ fontSize: '1.8em', color: "#FFFFFF"}}>  Chat</span> {/* Use span to increase font size */}
+    <span style={{ fontSize: '1.3em', color: "#FFFFFF"}}>  Find out who's working on what</span> {/* Use span to increase font size */}
   </>
 </Link>
       <img src={logo2} alt="Logo 2" style={{ height: '25px' }} /> {/* Adjust size as needed */}
