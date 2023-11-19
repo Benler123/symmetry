@@ -62,14 +62,15 @@ def test():
 def get_team_hours():
     return {"Coding": 7, "Browsing": 10, "Meeting": 5,  "Communicating": 4, "Scheduling": 12, "Chatting": 10, "Off-Topic" : 3}
 
+
 @app.get("/week_user_data/{user}/{start_date}")
 def get_week_user_data(user, start_date):
     return retrieve_user_category_data_by_week(user, start_date)
 
 @app.get("/daily_user_descriptions/{user}/{start_date}")
 def get_daily_user_descriptions(user, start_date):
-    return {"M":"today is monday", "T": "Today is Tuesday", "W": "Today is Wednesday", "R": "Today is Thursdday!", "F": "Today is Friday"}
-    # return retrive_daily_descriptions(user, start_date)
+    start_date ="2023-11-19"
+    return retrive_daily_descriptions(user, start_date)
 
 
 if __name__ == "__main__":

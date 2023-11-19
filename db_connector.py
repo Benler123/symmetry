@@ -158,9 +158,9 @@ def retrieve_user_category_data_by_week(user, start_day):
     curr_date = datetime.strptime(start_day, date_format)
     week_dict = {}
     for i in range(7):
-        week_dict[curr_date] = retrieve_user_category_data_by_day(user, date_format)
+        week_dict[curr_date] = retrieve_user_category_data_by_day(user, curr_date.strftime("%Y-%m-%d"))
         curr_date = curr_date + timedelta(days=1)
-
+    return week_dict
 
 def retrive_daily_descriptions(user, day):
     text_string = """
@@ -168,17 +168,18 @@ def retrive_daily_descriptions(user, day):
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
         WHERE data.device = (:user)
-        AND DATE(data.timestamp) = (:day)
+        AND DATE(data.timestamp) = :day
     """
 
     text_string = text_string.replace(":user", "\"" + user + "\"")
-    text_string = text_string.replace(":day", "\"" + day + "\"")
+    text_string = text_string.replace(":day", "\"" + day + "\"") 
+
 
     retrieve_user_info = sqlalchemy.text(text_string)
+    result = db_conn.execute(retrieve_user_info)
+    descriptions = []
+    for row in result:
+        descriptions.append(row[0])
+    return descriptions
 
-    return db_conn.execute(retrieve_user_info)
 
-
-# result = retrive_daily_descriptions("Ben Steele", "2023-11-19")
-# for row in result:
-#     print(row)
