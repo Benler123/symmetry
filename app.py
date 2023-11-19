@@ -75,7 +75,8 @@ def get_daily_user_descriptions(user, start_date):
     return retrive_daily_descriptions(user, start_date)
 
 @app.get("/day_user_chat/{user}/{start_date}")
-def get_query_response(user, start_date, data = Body(...)): 
+def get_query_response(user, start_date, data = Body(...)):
+    data = str(data)
     api_key = os.environ.get("OPENAI_API_KEY")
     headers = {
         "Content-Type": "application/json",
@@ -83,7 +84,7 @@ def get_query_response(user, start_date, data = Body(...)):
     }
     desc = retrive_daily_descriptions(user, start_date)
     desc_prompt = "\n".join(desc)
-    chat_prompt = USER_CHAT_PROMPT_PREFIX + desc_prompt + USER_CHAT_PROMPT_SUFFIX + data.get("query")
+    chat_prompt = USER_CHAT_PROMPT_PREFIX + desc_prompt + USER_CHAT_PROMPT_SUFFIX + data
     payload = {
         "model": "gpt-3.5-turbo-16k",
         "messages": [
