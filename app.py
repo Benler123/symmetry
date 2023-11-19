@@ -88,6 +88,55 @@ def get_week_user_data(user, start_date):
 def get_daily_user_descriptions(user, start_date):
     return retrive_daily_descriptions(user, start_date)
 
+@app.get("/get_chat{query}")
+def get_daily_user_descriptions(user, start_date):
+    return retrive_daily_descriptions(user, start_date)
+
+
+
+@app.get("/chat_with_knowledge/{question}")
+def chat_with_knowledge(question):
+    api_key = os.environ.get("OPENAI_API_KEY")
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": f"Bearer {api_key}"
+    } 
+    chat_prompt = "Answer the following question based on the remaining information in the prompt. \n\nQuestion: " + question + """\n\nAnswer:
+1. **Ben (Designer)**
+   - **PowerPoint and Video Presentation**: Ben definitely took charge of creating the PowerPoint and video presentation. His design skills and experience in consulting would have ensured that the presentation was not only visually appealing but also effectively conveyed the app's purpose.
+   - **Figma Designs**: Ben certainly created the Figma designs for the app, focusing on making the user interface both attractive and user-friendly.
+
+2. **Matt (Web Developer)**
+   - **React JS Front End**: Matt surely handled the development of the front end using React JS, turning Ben's designs into a functional user interface.
+   - **Front-Back End Connection**: Matt also definitely worked on integrating the front end with the back end, ensuring that the app worked smoothly as a whole.
+
+3. **Dhruv (System Design and Architecture Expert)**
+   - **API Design**: Dhruv undoubtedly led the API design, using his expertise in system architecture to create efficient and scalable APIs.
+   - **System Level Image Capturing Daemon**: Additionally, Dhruv was likely responsible for the development of the system-level image capturing daemon, ensuring it was well-integrated into the overall system architecture.
+
+4. **Tyler (Software Engineer)**
+   - **Client-Server Interaction**: Tyler certainly focused on the client-server interactions, especially the app's efficiency and responsiveness in communication with the server.
+   - **Cloud Integration**: He definitely managed the integration with the Google Cloud Platform SQL database, overseeing secure and efficient data storage and retrieval."""
+    payload = {
+        "model": "gpt-3.5-turbo-16k",
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": chat_prompt
+                    }
+                ]
+            }
+        ],
+        "max_tokens": 4096
+    }
+    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
+    return response["choices"][0]["message"]["content"]
+
+
+
 @app.get("/day_user_chat/{user}/{start_date}")
 def get_query_response(user, start_date, data = Body(...)):
     data = str(data)
