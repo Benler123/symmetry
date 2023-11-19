@@ -2,6 +2,7 @@ from google.cloud.sql.connector import Connector
 import sqlalchemy
 from queries import *
 from datetime import datetime, timedelta
+from gpt_client import describe_day
 
 project_id = "fast-gate-405518"
 region = "us-central1"
@@ -181,8 +182,19 @@ def retrive_daily_descriptions(user, day):
     descriptions = []
     for row in result:
         descriptions.append(row[0])
-    
-
     return descriptions
+    
+def summarize_day(user, day):
+    description = retrive_daily_descriptions(user, day)
+    summary = describe_day(description)
+    return summary
 
-
+def summarize_week(user, start_day):
+    date_format = "%Y-%m-%d"
+    curr_date = datetime.strptime(start_day, date_format)
+    summaries = {}
+    for day in ["M", "T", "W", "Th", "F"]:
+        summaries[day] = {}
+        summaries[day]["summary"] = summarize_day(user, curr_date)
+        curr_date = curr_date + timedelta(days=1)
+    return summaries

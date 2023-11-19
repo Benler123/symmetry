@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Body, BackgroundTasks
 from typing import List, Dict
 import base64
 from gpt_client import bg_task_completion_export
-from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, retrieve_user_category_data_by_day, retrieve_user_category_data_by_week, retrive_daily_descriptions
+from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, summarize_day, retrieve_user_category_data_by_week, retrive_daily_descriptions, summarize_week
 import uvicorn
 from prompts import USER_CHAT_PROMPT_PREFIX, USER_CHAT_PROMPT_SUFFIX
 import requests
@@ -101,6 +101,17 @@ def get_query_response(user, start_date, data = Body(...)):
     }
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
     return response["choices"][0]["message"]["content"]
+@app.get("/summarize_user_descriptions/{user}/{start_date}")
+def summarize_daily_user_descriptions(user, start_date):
+    return summarize_day(user, start_date)
+
+@app.get("/matts_endpoint/{user}/{start_date}")
+def matts_endpoint(user, start_date):
+    dict = retrieve_user_category_data_by_week(user, start_date)
+    dict2 = summarize_week(user, start_date)
+    for key in dict:
+        dict[key]["summary"] = dict2[key]["summary"]
+    return dict
 
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8001, debug=True)
