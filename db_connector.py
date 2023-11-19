@@ -113,15 +113,16 @@ def retrieve_all_image_table():
     return db_conn.execute(retrieve_image_table)
 
 def retrieve_user_data(user):
-    retrieve_user_info = sqlalchemy.text("""
+    text_string = """
         SELECT ImageTable.category, COUNT(*) as category_count
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
-        WHERE data.device = (:user) 
+        WHERE data.device = ###user###
         GROUP BY ImageTable.category;
-    """)
-    
-    result = db_conn.execute(retrieve_user_info, parameters={"user": user})
+    """
+    text_string = text_string.replace("###user###", "\"" + user + "\"")
+    retrieve_user_info = sqlalchemy.text(text_string)
+    result = db_conn.execute(retrieve_user_info)
     dict = {}
     for category, frequency in result:
         dict[category] = frequency
