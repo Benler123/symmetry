@@ -14,7 +14,6 @@ const Home = () => {
             navigate(`/profile?username=${username}`);
         }
     };
-    
 
     return (
         <div style={{
@@ -45,6 +44,7 @@ const Home = () => {
                     border:"3px solid #FFFFFF",
                     color:"#FFFFFF",
                     fontWeight:"bold",
+                    outline:"none",
                     marginBottom:"20px"
                 }}
                 type="text"
@@ -60,6 +60,7 @@ const Home = () => {
                     marginBottom: "20px",
                     padding: "20px",
                     borderRadius: "20px",
+                    outline:"none",
                     backgroundColor:"transparent",
                     border:"3px solid #FFFFFF",
                     fontWeight:"bold",

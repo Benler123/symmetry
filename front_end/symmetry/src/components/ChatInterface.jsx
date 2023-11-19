@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import ChatBubble from './ChatBubble';
+import agentProfilePic from "../resources/loginGuy.svg"
+import userProfilePic from "../resources/dhruvshah.svg"
 
 function ChatInterface() {
   const [message, setMessage] = useState('');
-  const [chatHistory, setChatHistory] = useState([]);
+  // Adding a welcome message to the initial state of chatHistory
+  const [chatHistory, setChatHistory] = useState([
+    { message: "Hello! I'm here to help you keep track of all your teammates! How can I help? ", isReceived: true }
+  ]);
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -13,7 +18,7 @@ function ChatInterface() {
       setMessage('');
     }
   };
-
+  
   const handleKeyPress = (event) => {
     if (event.key === 'Enter') {
       handleSendMessage();
@@ -35,9 +40,13 @@ function ChatInterface() {
       maxHeight: "50%"
     },
     chatInput: {
-      border: 'none',
+      border: '3px solid #FFFFFF',
       padding: '15px',
-      borderTop: '1px solid #ccc'
+      backgroundColor: "transparent",
+      borderRadius: "20px",
+      color:"#FFFFFF",
+      fontWeight:"bold",
+      outline:"none"
     }
   };
 
@@ -45,7 +54,12 @@ function ChatInterface() {
     <div style={styles.chatInterface}>
       <div style={styles.chatHistory}>
         {chatHistory.map((chat, index) => (
-          <ChatBubble key={index} message={chat.message} isReceived={chat.isReceived} />
+          <ChatBubble
+          key={index}
+          message={chat.message}
+          isReceived={chat.isReceived}
+          profilePic={chat.isReceived ? agentProfilePic : userProfilePic}
+          />
         ))}
       </div>
       <input
@@ -57,6 +71,7 @@ function ChatInterface() {
         style={styles.chatInput}
       />
     </div>
+    
   );
 }
 

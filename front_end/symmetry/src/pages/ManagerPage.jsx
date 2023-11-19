@@ -46,8 +46,6 @@ function ManagerPage() {
     }],
   };
   
-  
-
   const chartOptions = {
     maintainAspectRatio: false, 
   };
