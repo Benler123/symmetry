@@ -13,8 +13,10 @@ const ProfileComponent = ({ profileSvg, name, onClick }) => {
       }}
       onClick={() => onClick(name)}
     >
-      <img src={profileSvg} alt='profile' style={{ marginRight: "30px", width: "auto", maxHeight: "80%" }}></img>
-      <p>{name}</p>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <img src={profileSvg} alt='profile' style={{ marginRight: "30px", paddingTop:"10px", paddingBottom:"10px", maxHeight:"80%"}}></img>
+        <p>{name}</p>
+      </div>
     </div>
   );
 };

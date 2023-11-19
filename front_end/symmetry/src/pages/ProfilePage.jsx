@@ -5,8 +5,7 @@ import { useLocation } from 'react-router-dom';
 import bSteeleImage from '../resources/bensteele.svg';
 import tKwokImage from '../resources/tylerkwok.svg';
 import dShahImage from '../resources/dhruvshah.svg';
-import mMasonImage from '../resources/mellisa.svg';
-import kTaylorImage from '../resources/kimmy.svg';
+import msteeleImage from '../resources/matt.svg'
 import ProfileComponent from '../components/ProfileComponent';
 import WorkGradComponent from '../components/WorkGradComponent';
 import colors from '../resources/colors';
@@ -26,12 +25,23 @@ const ProfilePage = () => {
     flexDirection: 'row',
     height: '100vh',
   };
+  
+  const chartOptions = {
+    maintainAspectRatio: false,
+    responsive: true,
+    legend: {
+      labels: {
+        fontColor: 'white',
+        fontSize: 16
+      }
+    }
+  };
 
   const leftPanelStyle = {
     flex: 5,
     backgroundColor: colors.backgroundColor,
     flexDirection: 'column',
-
+    marginLeft: '60px',
   };
 
   const rightPanelStyle = {
@@ -47,15 +57,13 @@ const ProfilePage = () => {
     'bsteele': bSteeleImage,
     'tkwok': tKwokImage,
     'dshah': dShahImage,
-    'mmason': mMasonImage,
-    'ktaylor': kTaylorImage
+    'mteele': msteeleImage
   };
   const userNames = {
     'bsteele': "Ben Steele",
     'tkwok': "Tyler Kwok",
     'dshah': "Dhruv Shah",
-    'mmason': "Maria Mason",
-    'ktaylor': "Kim Taylor"
+    'msteele':"Matt Steele"
   }
   const mockTasks = [
     ['Programming', 21],
@@ -85,17 +93,17 @@ const ProfilePage = () => {
       borderWidth: 0,
     }],
   };
-  const chartOptions = {
-    maintainAspectRatio: false, 
-  };
-  const selectedImage = userImages[username] || bSteeleImage;
+
+  const selectedImage = userImages[username] || msteeleImage;
   const selectedName = userNames[username] || 'Rob Boss';
 
   const imageUrls = [
     bSteeleImage,
-    kTaylorImage,
-    mMasonImage
+    msteeleImage,
+    tKwokImage,
+    dShahImage
   ];
+
   const bulletPointItems = [
     { color: '#FFD700', text: '12 Hours Debugging' },
     { color: '#8A2BE2', text: '2 Hours in Team Sessions' },
@@ -113,13 +121,11 @@ const ProfilePage = () => {
           <ProfileComponent profileSvg={selectedImage} name={selectedName} onClick={() => { }} />
           <div style={{ width: "70%", marginLeft: "5px" }}>
             <WorkGradComponent value={focusedScore[selectedDay]} focusedWorkPercent={focusedScore[selectedDay]} backgroundColor={colors.backgroundColor} />
-
-
           </div>
           <div style={{ width: "85%", marginLeft: "5px"}}>
-            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay}></DailyBreakDownComponent>
+            {/* Pass the selectedName as personName prop to DailyBreakDownComponent */}
+            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName}></DailyBreakDownComponent>
           </div>
-
         </div>
 
 
@@ -127,13 +133,10 @@ const ProfilePage = () => {
       </div>
       <div style={rightPanelStyle}>
         <div style={{ width: '50%', height: '50%', marginLeft: "14vw"}}>
-         
             <Pie style ={{transform: 'translateX(-80px)'}}data={data} options={chartOptions} />
             <h2 style={{justifyContent: 'center', marginLeft: "10px",  transform: 'translateY(-40px) translateX(-90px)', fontSize: "1.7em"}}>This week, Tyler spent</h2>
             <div style={{transform: 'translateY(-40px) translateX(-20px)'}}><ColoredBullets items={bulletPointItems} /></div>
-            
             </div>
-        
       </div>
     </div>
   );
