@@ -15,6 +15,7 @@ import DailyBreakDownComponent from '../components/DailyBreakdownComponent';
 
 
 const ProfilePage = () => {
+  
   const location = useLocation();
   const [selectedDay, setSelectedDay] = useState("M");
 

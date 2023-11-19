@@ -72,6 +72,7 @@ function ManagerPage() {
         // Add more colors if needed, matching the Figma design
       ],
       borderWidth: 0,
+
     }],
   };
   
@@ -79,6 +80,7 @@ function ManagerPage() {
 
   const chartOptions = {
     maintainAspectRatio: false, 
+
   };
   return (
     <div style={{ backgroundColor: colors.backgroundColor }}>
