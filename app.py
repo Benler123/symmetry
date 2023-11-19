@@ -6,15 +6,15 @@ import uvicorn
 
 app = FastAPI()
 
-capture_status_dict = {}
+not_capturing = set()
 
 @app.get("/")
 def index():
     return "RETURN"
 
 @app.post("/upload")
-def upload(background_tasks: BackgroundTasks, data: Dict[str, List[str]] = Body(...)):
-    if not capture_status_dict[data.get("user")]:
+def upload(background_tasks: BackgroundTasks, data = Body(...)):
+    if data.get("user") in not_capturing:
         raise HTTPException(status_code=400, detail="not accepting batches of images")
     
     if not data.get("images") or len(data.get("images")) == 0:
@@ -28,15 +28,19 @@ def upload(background_tasks: BackgroundTasks, data: Dict[str, List[str]] = Body(
 def set_access(user: str,capture: str):
     global capturing
     if capture.lower() == "y" or capture.lower() == "yes":
-        capture_status_dict[user] = True
+        if user in not_capturing:
+            not_capturing.remove(user)
         return "now capturing"
     elif capture.lower() == "n" or capture.lower() == "no":
-        capture_status_dict[user] = False
+        not_capturing.add(user)
         return "no longer capturing"
     raise HTTPException(status_code=400, detail="Input must be yes/y or no/n")
 
 @app.get("/user_data/{user}") 
 def retrive_user_data(user):
+    if not user:
+        return "must input a user"
+    
 
 @app.get("/test")
 def test():

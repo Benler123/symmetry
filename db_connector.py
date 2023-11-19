@@ -51,7 +51,7 @@ def initialize_database():
 
     db_conn.commit()
 
-def insert_batch_metadata(db_conn, device, timestamp):
+def insert_batch_metadata(device, timestamp):
 
     # insert data into our ratings table
     insert_primary = sqlalchemy.text(
@@ -60,16 +60,67 @@ def insert_batch_metadata(db_conn, device, timestamp):
 
     db_conn.execute(insert_primary, parameters={"device": device,
                                                 "timestamp" :timestamp})
+    
+    db_conn.commit()
 
-def insert_batch_image_data(db_conn, batch_id, description, category, base64_image):
+    
+def clear_database():
+
+    
+    db_conn.execute(sqlalchemy.text(
+        "DELETE FROM data"
+    ))
+    db_conn.execute(sqlalchemy.text(
+        "DELETE FROM ImageTable"
+    ))
+
+    reset_counter = sqlalchemy.text(
+        "ALTER TABLE (:table) AUTO_INCREMENT = 1;"
+    )
+
+    db_conn.execute(sqlalchemy.text("ALTER TABLE data AUTO_INCREMENT = 1;"))
+    db_conn.execute(sqlalchemy.text("ALTER TABLE ImageTable AUTO_INCREMENT = 1;"))
+
+    db_conn.commit()
+
+
+
+
+def insert_batch_image_data(batch_id, description, category, base64_image):
     insert_images = sqlalchemy.text(
-        "INSERT INTO ImageTable (batch_id, decription, category, base64_image)"
+        "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
         )
     
     db_conn.execute(insert_images, parameters={"batch_id":batch_id, 
                                                "description": description,
                                                 "category": category,
                                                 "base64_image": base64_image})
+    
+    db_conn.commit()
 
+def retrieve_all_primary():
+    retrieve_primary = sqlalchemy.text(
+        "SELECT * FROM data",
+    )
 
+    return db_conn.execute(retrieve_primary)
+
+def retrieve_all_image_table():
+    retrieve_image_table = sqlalchemy.text(
+        "SELECT * FROM ImageTable",
+    )
+
+    return db_conn.execute(retrieve_image_table)
+
+def retrieve_user_data(user):
+
+    retrieve_user_info = sqlalchemy.text("""
+        SELECT ImageTable.category, COUNT(*) as category_count
+        FROM ImageTable
+        JOIN data ON data.batch_id = ImageTable.batch_id
+        WHERE data.device = (:user)
+        GROUP BY ImageTable.category;
+    """)
+    
+    return db_conn.execute(retrieve_user_info, parameters={"user": user})
 
