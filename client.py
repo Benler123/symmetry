@@ -5,8 +5,17 @@ import statistics
 import io
 import base64
 import requests
+import argparse 
+
 
 TIME_INTERVAL = 30
+
+argparse = argparse.ArgumentParser()
+argparse.add_argument("--server_url", help="The URL of the server to send the images to.")
+argparse.add_argument("--userid", help="The user id of the user.")
+
+args = argparse.parse_args()
+
 
 class ScreenCaptureClient:
     def __init__(self, server_url="http://localhost:5000/"): 
@@ -14,7 +23,10 @@ class ScreenCaptureClient:
         self.median = None 
         self.framerate_supported = None 
         self.time_buffer = []
-        self.server_url = server_url
+        self.server_url = args.server_url
+        self.user_id = args.userid
+        if self.user_id == None: 
+            raise Exception("USER ID: NONE -- User ID Missing, try checking the command line arguments.")
     #method to create a buffer and guess on how many images the computer can process
     def initialize_client_buffer(self): 
         print("Important, if system dialogue pops up, please allow access to screen recording.")   
@@ -88,7 +100,9 @@ if __name__ == '__main__':
     print(banner)
     print("Screen Capture Client")
     client = ScreenCaptureClient("http://localhost:8001/upload")
+    print(client.user_id)
     client.initialize_client_buffer()
+    
     while True:
         client.export_to_server(client.capture_interval_system_buffer())
 
