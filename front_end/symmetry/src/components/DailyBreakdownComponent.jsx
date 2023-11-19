@@ -4,7 +4,7 @@ import { ArcElement, Chart as ChartJS } from 'chart.js';
 
 ChartJS.register(ArcElement);
 
-function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dailyHours, weeklyTotal}) {
+function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dailyHours, weeklyTotal, summary}) {
   const days = ["M", "T", "W", "TR", "F"]; // Array of days
   const dayName = {
     "M": "Monday",
@@ -69,10 +69,10 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
         ))}
       </div>
       <div style={{marginBottom: "0px"}}>
-        <p style={{fontSize: "1.4em", maxHeight: "13vh", height: "13vh", marginBottom: "40px", transform: "translateY(0px)"}}>{selectedDaySummary}</p>
+        <p style={{fontSize: "1.4em", maxHeight: "13vh", height: "13vh", marginBottom: "40px", transform: "translateY(0px)"}}>{summary}</p>
       </div>
 
-     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
+     <div style={{ marginTop: "45px" ,display: 'flex', alignItems: 'center', justifyContent: 'space-around' }}>
         <div style={{ width: '80%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', transform: 'translateX(-120px)' }}>
           <Pie data={data} options={chartOptions} />
         </div>

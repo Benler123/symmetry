@@ -21,12 +21,13 @@ const ProfilePage = () => {
   };
   const location = useLocation();
   const [selectedDay, setSelectedDay] = useState("M");
-  const [blockData, setBlockData] = useState({});
+  const [blockData, setBlockData] = useState({"M":{"summary":"Today was a good day"}});
   const [weekData, setWeekData] = useState({});
   const[activityData, setActivityData] = useState({});
   const [totalHoursPerDay, setTotalHoursPerDay] = useState({});
   const [focusedHoursPerDay, setFocusedHoursPerDay] = useState({});
   const [totalWeeklyHours, setTotalWeeklyHours] = useState(0);
+  
 
   useEffect(() => {
     fetch("http://127.0.0.1:8001/matts_endpoint/{user}/{start_date}", {
@@ -65,8 +66,7 @@ const ProfilePage = () => {
         setFocusedHoursPerDay(newFocusedHours);
         setTotalWeeklyHours(weeklyHours);
         setWeekData(activityTotals);
-        console.log(weeklyHours)
-        console.log(newTotalHours)
+      
         
       })
       .catch((error) => console.log(error));
@@ -187,7 +187,7 @@ const ProfilePage = () => {
     cursor: 'pointer'
   };
   
-
+  
   return (
     <div style={profileContainerStyle}>
       <div style={mainContentStyle}>
@@ -199,11 +199,11 @@ const ProfilePage = () => {
         <div style={{ marginLeft: "20px", marginTop: "20px", transform: 'translateY(30px)'}}>
           <ProfileComponent profileSvg={selectedImage} name={selectedName} onClick={() => { }} />
           <div style={{ width: "70%", marginLeft: "5px",}}>
-            <WorkGradComponent value={focusedScore[selectedDay]} focusedWorkPercent={focusedScore[selectedDay]} backgroundColor={colors.backgroundColor} />
+            <WorkGradComponent  focusedWorkPercent={focusedHoursPerDay[selectedDay] / totalHoursPerDay[selectedDay] * 100} backgroundColor={colors.backgroundColor} />
           </div>
           <div style={{ width: "85%", marginLeft: "5px"}}>
             {/* Pass the selectedName as personName prop to DailyBreakDownComponent */}
-            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal = {totalWeeklyHours} dailyHours = {totalHoursPerDay}></DailyBreakDownComponent>
+            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal = {totalWeeklyHours} dailyHours = {totalHoursPerDay} summary={blockData[selectedDay].summary}></DailyBreakDownComponent>
           </div>
         </div>
         {/* Left panel content */}

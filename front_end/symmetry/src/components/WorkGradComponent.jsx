@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import colors from '../resources/colors';
-const WorkGradComponent = ({ value, backgroundColor, focusedWorkPercent }) => {
+const WorkGradComponent = ({ backgroundColor, focusedWorkPercent }) => {
   const [opacity, setOpacity] = useState(0);
   const fillerBackground = `linear-gradient(to right, ${colors.green}, ${colors.red})`;
   const fillerStyles = {
     height: '100%',
-    width: `${value}%`,
+    width: `${focusedWorkPercent }%`,
     background: fillerBackground, 
     borderRadius: 'inherit',
     textAlign: 'right',
