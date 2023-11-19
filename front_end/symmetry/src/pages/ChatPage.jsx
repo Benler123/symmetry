@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for version 6
 import ChatInterface from '../components/ChatInterface';
 import Footer from '../components/footer';
+import LandingFooter from '../components/LandingFooter';
 
 
 const ChatPage = () => {
@@ -33,7 +34,7 @@ const ChatPage = () => {
       <div style={{ width: "50%", height: "60%" }}>
         <ChatInterface/>
       </div>
-      <Footer/>
+      <LandingFooter/>
     </div>
   );
 }

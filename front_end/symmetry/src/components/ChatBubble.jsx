@@ -14,6 +14,7 @@ function ChatBubble({ message, isReceived, profilePic }) {
       display: 'flex',
       alignItems: 'center',
       wordWrap: 'break-word',
+      maxWidth: '65%',
       backgroundColor: isReceived ? '#e5e5ea' : '#007aff',
       color: isReceived ? 'black' : 'white',
       order: isReceived ? 2 : 1, // Order 2 when sent by user
