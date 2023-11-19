@@ -117,7 +117,7 @@ def retrieve_user_data(user):
         SELECT ImageTable.category, COUNT(*) as category_count
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
-        WHERE data.device = (:user) AND 
+        WHERE data.device = (:user) 
         GROUP BY ImageTable.category;
     """)
     
