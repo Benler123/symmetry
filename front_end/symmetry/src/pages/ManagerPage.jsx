@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS } from 'chart.js';
 import HeaderComponent from '../components/HeaderComponent';
@@ -13,6 +13,21 @@ import kTaylorImage from '../resources/kimmy.svg';
 import { useNavigate } from "react-router-dom";
 ChartJS.register(ArcElement);
 function ManagerPage() {
+    let isFirst = true;
+    const [teamHours, setTeamHours] = useState();
+    useEffect(() => {
+    fetch("http://localhost:8001/get_team_hours", {
+      method: "GET",
+      headers: {
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setTeamHours(data)
+        console.log(data)
+      })
+      .catch((error) => console.log(error));
+  }, []);
   const navigate = useNavigate();
 
   const handleProfileClick = (name) => {
@@ -28,7 +43,9 @@ function ManagerPage() {
   ];
   
   const labels = mockTasks.map(task => task[0]);
+  console.log(labels)
   const dataPoints = mockTasks.map(task => task[1]);
+  console.log(dataPoints)
   
   const data = {
     labels: labels, 

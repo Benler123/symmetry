@@ -4,8 +4,19 @@ import base64
 from gpt_client import bg_task_completion_export
 from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database
 import uvicorn
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 not_capturing = set()
 
@@ -60,6 +71,8 @@ def test():
 
 @app.get("/get_team_hours")
 def get_team_hours():
+
+
     return {"Coding": 7, "Browsing": 10, "Meeting": 5,  "Communicating": 4, "Scheduling": 12, "Chatting": 10, "Off-Topic" : 3}
 
 if __name__ == "__main__":

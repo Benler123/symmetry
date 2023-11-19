@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pie } from 'react-chartjs-2';
 import { useLocation } from 'react-router-dom';
 import bSteeleImage from '../resources/bensteele.svg';
