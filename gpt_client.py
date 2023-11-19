@@ -1,12 +1,13 @@
-import base64
 import requests
 import os
 import re 
 import json
 
-prompt = """ For each screenshot extract the following. Activity is the activity being performed in the screenshot. Description is a more detailed explanation of what is going on. For the activity, there are only 5 classifications. For activity, each screenshot needs to be labeled as one of the following [Coding, Browsing, Meeting,  Communicating, Scheduling, Chatting, Off-Topic]. 
+prompt = """For each screenshot extract the following. Activity is the activity being performed in the screenshot. Description is a more detailed explanation of what is going on. For the activity, there are only 5 classifications. For activity, each screenshot needs to be labeled as one of the following [Coding, Browsing, Meeting,  Communicating, Scheduling, Chatting, Off-Topic]. 
 
 Communicating would be when someone has an application like microsoft teams open to the chat bar, or slack messages, or discord. Meeting would be if the user appears to be on zoom or in some sort of video conference. Scheduling is when a calendar type app is open.  Chatting is when an AI like ChatGPT or claude is open. For coding, make sure to note in the description what the overall project folder opened is and what the name of the file is that is being edited.
+
+Write an activity and description for each screenshot, even if the images are the same.
 
 
 EXAMPLES: 
@@ -41,6 +42,7 @@ Description: Stack overflow is open in the web browser being looked at The curre
 # OpenAI API Key
 
 def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_API_KEY")):
+    
     # Setting up headers for the API request
     headers = {
         "Content-Type": "application/json",
@@ -61,9 +63,10 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
                 ] + [{"type": "image_url", "image_url": {"url": f"data:image/jpeg;base64,{image}"}} for image in base64_images]
             }
         ],
-        "max_tokens": 300
+        "max_tokens": 1024
     }
-
+    with(open("payload.json", "w")) as f:
+        json.dump(payload, f)
     # Sending the request and returning the response
     response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
     return response["choices"][0]["message"]["content"]

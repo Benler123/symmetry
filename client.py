@@ -30,7 +30,7 @@ class ScreenCaptureClient:
             times.append(ss_end_time - ss_start_time)
         self.mean = statistics.mean(times)
         self.median = statistics.median(times)
-        self.framerate_supported = math.floor((1 / (self.mean)) * 60)
+        self.framerate_supported = math.floor((1 / (self.mean)) * 10)
         self.time_buffer = times
         print("initialized client.")
     #captures 1 minute worth of images without buffering based on expected framerate 
@@ -64,7 +64,7 @@ class ScreenCaptureClient:
             #remove the first element from the time buffer
             self.time_buffer.pop(0)
             self.time_buffer.append(ss_end_time - ss_start_time)
-        self.framerate_supported = math.floor((1 / (statistics.mean(self.time_buffer))) * 60)
+        self.framerate_supported = math.floor((1 / (statistics.mean(self.time_buffer))) * 10)
         return interval_images
     def export_to_server(self, interval_images):
         print("Exporting to server.")

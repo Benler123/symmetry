@@ -20,7 +20,6 @@ def upload(background_tasks: BackgroundTasks, data: Dict[str, List[str]] = Body(
     
     if not data.get("images") or len(data.get("images")) == 0:
         raise HTTPException(status_code=400, detail="No Images")
-    
     image_list = data["images"]
     background_tasks.add_task(bg_task_completion_export, image_list)
     return
