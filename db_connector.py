@@ -78,10 +78,6 @@ def clear_database():
         "DELETE FROM ImageTable"
     ))
 
-    reset_counter = sqlalchemy.text(
-        "ALTER TABLE (:table) AUTO_INCREMENT = 1;"
-    )
-
     db_conn.execute(sqlalchemy.text("ALTER TABLE data AUTO_INCREMENT = 1;"))
     db_conn.execute(sqlalchemy.text("ALTER TABLE ImageTable AUTO_INCREMENT = 1;"))
 
@@ -91,9 +87,14 @@ def clear_database():
 
 
 def insert_batch_image_data(batch_id, description, category, base64_image):
-    insert_images = sqlalchemy.text(
-        "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
-        )
+    text_string = "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
+    text_string = text_string.replace(":batch_id", "\"" + batch_id + "\"")
+    text_string = text_string.replace(":description", "\"" + description + "\"")
+    text_string = text_string.replace(":category", "\"" + category + "\"")
+    text_string = text_string.replace(":category", "\"" + category + "\"")
+
+
+    insert_images = sqlalchemy.text(text_string)
     
     db_conn.execute(insert_images, parameters={"batch_id":batch_id, 
                                                "description": description,
