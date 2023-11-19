@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Body, BackgroundTasks
 from typing import List, Dict
 import base64
 from symmetry.ai_connector import bg_task_completion_export
-from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database
+from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, retrieve_user_category_data_by_day, retrieve_user_category_data_by_week
 import uvicorn
 
 app = FastAPI()
@@ -62,5 +62,10 @@ def test():
 def get_team_hours():
     return {"Coding": 7, "Browsing": 10, "Meeting": 5,  "Communicating": 4, "Scheduling": 12, "Chatting": 10, "Off-Topic" : 3}
 
+@app.get("/week_user_data/{user}/{start_date}")
+def get_week_user_data(user, start_date):
+    return retrieve_user_category_data_by_week(user, start_date)
+
 if __name__ == "__main__":
     uvicorn.run(app, host="127.0.0.1", port=8001, debug=True)
+
