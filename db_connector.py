@@ -54,6 +54,10 @@ def initialize_database():
 def insert_batch_metadata(device, timestamp):
 
     # insert data into our ratings table
+    text_string = "INSERT INTO data (device, timestamp) VALUES (:device, :timestamp)"
+    text_string = text_string.replace(":device", "\"" + device + "\"")
+    text_string = text_string.replace(":timestamp", "\"" + timestamp + "\"")
+
     insert_primary = sqlalchemy.text(
         "INSERT INTO data (device, timestamp) VALUES (:device, :timestamp)",
     )
@@ -129,14 +133,18 @@ def retrieve_user_data(user):
     return dict
 
 def retrieve_user_category_data_by_day(user, day):
-    retrieve_user_info = sqlalchemy.text("""
+    text_string = """
         SELECT ImageTable.category, COUNT(*) as category_count
         FROM ImageTable
         JOIN data ON data.batch_id = ImageTable.batch_id
         WHERE data.device = (:user)
         AND DATE(data.timestamp) = (:day)
         GROUP BY ImageTable.category;
-    """)
+    """
+    text_string = text_string.replace(":user", "\"" + user + "\"")
+    text_string = text_string.replace(":day", "\"" + day + "\"")
+
+    retrieve_user_info = sqlalchemy.text(text_string)
 
     result = db_conn.execute(retrieve_user_info, parameters={"user": user, "day": day})
     dict = {}
