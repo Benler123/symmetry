@@ -7,8 +7,21 @@ import uvicorn
 from prompts import USER_CHAT_PROMPT_PREFIX, USER_CHAT_PROMPT_SUFFIX
 import requests
 import os
+from fastapi.middleware.cors import CORSMiddleware
+
 
 app = FastAPI()
+origins = ["*"]
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 not_capturing = set()
 
