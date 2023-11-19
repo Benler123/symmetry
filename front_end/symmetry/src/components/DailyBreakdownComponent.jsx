@@ -5,12 +5,12 @@ import { ArcElement, Chart as ChartJS } from 'chart.js';
 ChartJS.register(ArcElement);
 
 function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dailyHours, weeklyTotal, summary}) {
-  const days = ["M", "T", "W", "TR", "F"]; // Array of days
+  const days = ["M", "T", "W", "Th", "F"]; // Array of days
   const dayName = {
     "M": "Monday",
     "T": "Tuesday",
     "W": "Wednesday",
-    "TR": "Thursday",
+    "Th": "Thursday",
     "F": "Friday"
   }
 
@@ -19,7 +19,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
     "M": `Throughout the day today, ${personName} worked hard all morning researching and programming what was talked about in this week's meetings. ${personName} met with 3 team members on 3 different occasions today.`,
     "T": `Tuesday is the peak of productivity and deep work for ${personName}. It's the day when energy levels are typically high, making it ideal for tackling the most challenging tasks.`,
     "W": `Midweek, Wednesday serves as a checkpoint for evaluating ${personName}'s week's progress. It's a time for reviewing goals and strategies.`,
-    "TR": `Thursday is for collaboration and meetings for ${personName}. It's an opportunity to sync with the team and assess progress.`,
+    "Th": `Thursday is for collaboration and meetings for ${personName}. It's an opportunity to sync with the team and assess progress.`,
     "F": `Friday is about wrapping up and reflection for ${personName}. It's a time to finish tasks, review the week's achievements, and prepare for the next week.`
   };
 
@@ -27,7 +27,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
     "M": 26,
     "T": 34,
     "W": 17,
-    "TR": 22,
+    "Th": 22,
     "F": 8
   }
 

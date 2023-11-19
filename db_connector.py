@@ -163,7 +163,7 @@ def retrieve_user_category_data_by_day(user, day):
 
 def retrieve_user_category_data_by_week(user, start_day):
     date_format = "%Y-%m-%d"
-    curr_date = datetime.strptime(start_day, date_format)
+    curr_date = datetime.datetime.strptime(start_day, date_format)
     week_dict = {}
     for letter in ["M", "T", "W", "Th", "F"]:
         week_dict[letter] = {}
@@ -202,7 +202,7 @@ def summarize_day(user, day):
 
 def summarize_week(user, start_day):
     date_format = "%Y-%m-%d"
-    curr_date = datetime.strptime(start_day, date_format)
+    curr_date = datetime.datetime.strptime(start_day, date_format)
     summaries = {}
     for day in ["M", "T", "W", "Th", "F"]:
         summaries[day] = {}
