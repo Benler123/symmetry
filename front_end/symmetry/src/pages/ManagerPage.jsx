@@ -15,6 +15,9 @@ ChartJS.register(ArcElement);
 function ManagerPage() {
     let isFirst = true;
     const [teamHours, setTeamHours] = useState();
+    const [focusedHours, setFocusedHours] = useState();
+    const [cumulativeHours, setCumulativeHours] = useState();
+    const[dataPoints, setDataPoints] = useState([22,44,55]);
     useEffect(() => {
     fetch("http://localhost:8001/get_team_hours", {
       method: "GET",
@@ -24,6 +27,13 @@ function ManagerPage() {
       .then((response) => response.json())
       .then((data) => {
         setTeamHours(data)
+
+        setDataPoints(Object.values(data))
+        setCumulativeHours(Object.values(data).reduce((accumulator, currentValue) => accumulator + currentValue, 0))
+        const excludedCategories = ["Meeting", "Scheduling", "Off-Topic"];
+        setFocusedHours(Object.entries(data)
+        .filter(([key, value]) => !excludedCategories.includes(key))
+        .map(([key, value]) => value).reduce((accumulator, currentValue) => accumulator + currentValue, 0))
         console.log(data)
       })
       .catch((error) => console.log(error));
@@ -44,9 +54,8 @@ function ManagerPage() {
   
   const labels = mockTasks.map(task => task[0]);
   console.log(labels)
-  const dataPoints = mockTasks.map(task => task[1]);
-  console.log(dataPoints)
-  
+  //const dataPoints = mockTasks.map(task => task[1]);
+  //console.log(dataPoints)
   const data = {
     labels: labels, 
     datasets: [{
@@ -57,6 +66,9 @@ function ManagerPage() {
         '#FDB45C', // Yellow
         '#949FB1', // Green
         '#4D5360', // Purple
+        '#ADD4AD', // Color
+        '#FFFFFF', // Red
+
         // Add more colors if needed, matching the Figma design
       ],
       borderWidth: 0,
@@ -80,17 +92,17 @@ function ManagerPage() {
         </div>
         <div style={{ width: '82%', display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', color: "white"}}>
-          <GradientBar value={104} backgroundColor={colors.backgroundColor} width={"80%"} />
-          <h1 style={{ textAlign: 'left' }}>Your team spent 197 Cumulative Hours This week on Their Tasks</h1>
-          <GradientBar value={200} backgroundColor={colors.backgroundColor} width={'60%'}/>
-          <h1 style={{ textAlign: 'left' }}>Your team was focused for 152 Cumulative Hours this week</h1>
+          <GradientBar value={cumulativeHours * 2} backgroundColor={colors.backgroundColor} width={"80%"} />
+          <h1 style={{ textAlign: 'left' }}>Your team spent {cumulativeHours} Cumulative Hours This week on Their Tasks</h1>
+          <GradientBar value={focusedHours * 2} backgroundColor={colors.backgroundColor} width={'60%'}/>
+          <h1 style={{ textAlign: 'left' }}>Your team was focused for {focusedHours} Hours this week</h1>
         </div>
           <div style={{ flex: 3, backgroundColor: colors.backgroundColor, padding: '20px', display: 'flex', alignItems: 'center' }}>
             <div style={{ width: '50%', height: '85%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
               <Pie data={data} options={chartOptions} />
             </div>
             <div style={{ width: '50%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <WorkComponent tasks={mockTasks} />
+              <WorkComponent tasks={teamHours} />
             </div>
           </div>
         </div>
