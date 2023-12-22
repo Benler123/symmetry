@@ -50,3 +50,5 @@ coverage.xml
 docs/_build/
 
 /ignored
+**.DS_Store
+*.pyc
