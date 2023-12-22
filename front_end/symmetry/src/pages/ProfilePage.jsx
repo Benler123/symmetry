@@ -317,7 +317,7 @@ const ProfilePage = () => {
           </div>
           <div style={{ width: "85%", marginLeft: "5px"}}>
             {/* Pass the selectedName as personName prop to DailyBreakDownComponent */}
-            <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal = {totalWeeklyHours} dailyHours = {totalHoursPerDay} summary={blockData[selectedDay].summary}></DailyBreakDownComponent>
+            blockData[selectedDay] && <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal = {totalWeeklyHours} dailyHours = {totalHoursPerDay} summary={blockData[selectedDay].summary}></DailyBreakDownComponent>
           </div>
         </div>
         {/* Left panel content */}

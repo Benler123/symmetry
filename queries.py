@@ -14,3 +14,11 @@ create_second_table = """CREATE TABLE IF NOT EXISTS ImageTable (
     FOREIGN KEY (batch_id) REFERENCES data(batch_id)
 );
 """
+
+create_description_table = """CREATE TABLE IF NOT EXISTS descriptionTable (
+    image_id INT AUTO_INCREMENT PRIMARY KEY,
+    timestamp DATETIME,
+    user TEXT,
+    summary TEXT,
+);
+"""

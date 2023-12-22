@@ -55,6 +55,14 @@ def initialize_database():
 
     db_conn.commit()
 
+    db_conn.execute(
+        sqlalchemy.text(
+            create_description_table
+        )
+    )
+    
+    db_conn.commit()
+
 def insert_batch_metadata(device, timestamp):
 
     # insert data into our ratings table
@@ -213,7 +221,6 @@ def summarize_week(user, start_day):
 
 def bg_task_completion_export(base_64_image_array, userid):
     activities = convert(explain_images(base_64_image_array))
-    print("FINSIHED EXPLAINING")
     insert_batch_metadata(userid, datetime.datetime.now())
     for i,activity in enumerate(activities):
         insert_batch_image_data(retrive_curr_batch(), activity["Description"] ,activity["Activity"], base_64_image_array[i])
