@@ -109,11 +109,10 @@ def clear_database():
 
 def insert_batch_image_data(batch_id, description, category, base64_image):
     text_string = "INSERT INTO ImageTable (batch_id, description, category, base64_image) VALUES (:batch_id, :description, :category, :base64_image)"
-    text_string = text_string.replace(":batch_id",  "\"" + str(batch_id.fetchone()[0]) + "\"")
-    text_string = text_string.replace(":description", "\"" + description + "\"")
-    text_string = text_string.replace(":category", "\"" + category.replace("\n", "") + "\"")
-    text_string = text_string.replace(":base64_image", "\"" + "SuperSecretCheatCode" + "\"")
-
+    text_string = text_string.replace(":batch_id",  "'" + str(batch_id.fetchone()[0]) + "'")
+    text_string = text_string.replace(":description", "'" + description + "'")
+    text_string = text_string.replace(":category", "'" + category.replace("\n", "") + "'")
+    text_string = text_string.replace(":base64_image", "'" + "SuperSecretCheatCode" + "'")
 
     insert_images = sqlalchemy.text(text_string)
     

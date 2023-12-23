@@ -5,7 +5,6 @@ import re
 import json
 from prompts import DESCRIPTION_PROMPT as dp
 from prompts import USER_CHAT_PROMPT_PREFIX, USER_CHAT_PROMPT_SUFFIX
-from db_connector import retrive_daily_descriptions
 from Models.Summarizer_Model import Summarizer_Model
 
 class gpt3_client(Summarizer_Model):
