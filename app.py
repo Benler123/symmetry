@@ -2,7 +2,7 @@ from fastapi import FastAPI, HTTPException, Body, BackgroundTasks
 from typing import List, Dict
 import base64
 from db_connector import bg_task_completion_export
-from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, summarize_day, retrieve_user_category_data_by_week, retrive_daily_descriptions, summarize_week
+from db_connector import retrieve_user_data, retrieve_all_primary, retrieve_all_image_table, clear_database, summarize_day, retrieve_user_category_data_by_week, retrive_daily_descriptions, summarize_week, respond_using_desc_context
 import uvicorn
 from prompts import USER_CHAT_PROMPT_PREFIX, USER_CHAT_PROMPT_SUFFIX
 import requests
@@ -92,7 +92,7 @@ def get_daily_user_descriptions(user, start_date):
     return retrive_daily_descriptions(user, start_date)
 
 
-
+# TODO fix this
 @app.get("/chat_with_knowledge/{question}")
 def chat_with_knowledge(question):
     api_key = os.environ.get("OPENAI_API_KEY")
@@ -135,91 +135,18 @@ def chat_with_knowledge(question):
     return response["choices"][0]["message"]["content"]
 
 
-
 @app.get("/day_user_chat/{user}/{start_date}")
 def get_query_response(user, start_date, data = Body(...)):
     data = str(data)
-    api_key = os.environ.get("OPENAI_API_KEY")
-    headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-    }
     desc = retrive_daily_descriptions(user, start_date)
-    desc_prompt = "\n".join(desc)
-    chat_prompt = USER_CHAT_PROMPT_PREFIX + desc_prompt + USER_CHAT_PROMPT_SUFFIX + data
-    payload = {
-        "model": "gpt-3.5-turbo-16k",
-        "messages": [
-            {
-                "role": "user",
-                "content": [
-                    {
-                        "type": "text",
-                        "text": chat_prompt
-                    }
-                ]
-            }
-        ],
-        "max_tokens": 512
-    }
-    response = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload).json()
-    return response["choices"][0]["message"]["content"]
-
+    return respond_using_desc_context(desc, data)
+  
 @app.get("/summarize_user_descriptions/{user}/{start_date}")
 def summarize_daily_user_descriptions(user, start_date):
     return summarize_day(user, start_date)
 
 @app.get("/matts_endpoint/{user}/{start_date}")
 def matts_endpoint(user, start_date):
-    daySummaries = {
-    "M": {
-        "summary": "Tyler came in at 11AM and watched Youtube for two hours, then left the office.",
-        "activities": {
-            "Coding": 3,
-            "Browsing": 1,
-            "Meeting": 2,
-            "Communicating": 1,
-            "Off-Topic": 1
-        }
-    },
-    "T": {
-        "summary": "Tyler was intensely focused on Tuesday, editing mod-sim.c. Later in the day, he was working on a file called assignment.py while looking at a PDF called machine_learning.pdf. He also messaged a few peers on teams for academic help",
-        "activities": {
-            "Coding": 4,
-            "Browsing": 1,
-            "Scheduling": 2,
-            "Communicating": 1
-        }
-    },
-    "W": {
-        "summary": "In the morning Tyler had a meeting. This seemingly took 2 hours of capture. These meetings seemed to be about strategic alignment of his group project",
-        "activities": {
-            "Meeting": 2,
-            "Communicating": 2,
-            "Scheduling": 2,
-            "Chatting": 2
-        }
-    },
-    "Th": {
-        "summary": "Tyler collaborated a lot on Thursday. He synced up with his hackathon team and his mobile apps group.  He spent the day collectively addressing challenges with these groups.",
-        "activities": {
-            "Meeting": 3,
-            "Communicating": 3,
-            "Chatting": 2
-        }
-    },
-    "F": {
-        "summary": "On Friday Tyler wrapped up some quick tasks and prepared for the next week. He scheduled meetings for next week, discussed with his research professor, and met with his hackathon group",
-        "activities": {
-            "Coding": 2,
-            "Browsing": 1,
-            "Scheduling": 2,
-            "Communicating": 2,
-            "Off-Topic": 1
-        }
-    }
-}
-    return daySummaries
     print("endpoint is running")
     dict = retrieve_user_category_data_by_week(user, start_date)
     dict2 = summarize_week(user, start_date)

@@ -7,6 +7,7 @@ from prompts import DESCRIPTION_PROMPT as dp
 import time
 # OpenAI API Key
 
+
 def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_API_KEY")):
     
     # Setting up headers for the API request
@@ -39,7 +40,7 @@ def explain_images(base64_images, prompt=prompt, api_key=os.environ.get("OPENAI_
     return response["choices"][0]["message"]["content"]
 
     
-def describe_day(descriptions ,description_prompt=dp, api_key=os.environ.get("OPENAI_API_KEY")):
+def describe_day(descriptions, description_prompt=dp, api_key=os.environ.get("OPENAI_API_KEY")):
     headers = {
         "Content-Type": "application/json",
         "Authorization": f"Bearer {api_key}"

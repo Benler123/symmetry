@@ -2,8 +2,9 @@ from google.cloud.sql.connector import Connector
 import sqlalchemy
 from queries import *
 from datetime import datetime, timedelta
-from gpt_client import *
+# from gpt_client import *
 import datetime
+from LLM_client_factory import LLM_client_factory
 
 project_id = "fast-gate-405518"
 region = "us-central1"
@@ -17,6 +18,11 @@ DB_NAME = "symmetry_db"
 
 categories =  ['Coding', 'Browsing', 'Meeting',  'Communicating', 'Scheduling', 'Chatting', 'Off-Topic']
 connector = Connector()
+
+client_factory = LLM_client_factory()
+image_client = client_factory.generate_image_model("gpt")
+summarizer_client = client_factory.generate_summarizer_model("gpt")
+
 
 def getconn():
     conn = connector.connect(
@@ -114,7 +120,7 @@ def insert_batch_image_data(batch_id, description, category, base64_image):
     db_conn.execute(insert_images)
     
     db_conn.commit()
-    return "PENIS"
+    return "Appleseed"
 
 def retrieve_all_primary():
     retrieve_primary = sqlalchemy.text(
@@ -171,7 +177,7 @@ def retrieve_user_category_data_by_day(user, day):
 
 def retrieve_user_category_data_by_week(user, start_day):
     date_format = "%Y-%m-%d"
-    curr_date = datetime.datetime.strptime(start_day, date_format)
+    curr_date = datetime.strptime(start_day, date_format)
     week_dict = {}
     for letter in ["M", "T", "W", "Th", "F"]:
         week_dict[letter] = {}
@@ -205,12 +211,12 @@ def retrive_daily_descriptions(user, day):
     
 def summarize_day(user, day):
     description = retrive_daily_descriptions(user, day)
-    summary = describe_day(description)
+    summary = summarizer_client.describe_day(description)
     return summary
 
 def summarize_week(user, start_day):
     date_format = "%Y-%m-%d"
-    curr_date = datetime.datetime.strptime(start_day, date_format)
+    curr_date = datetime.strptime(start_day, date_format)
     summaries = {}
     for day in ["M", "T", "W", "Th", "F"]:
         summaries[day] = {}
@@ -220,8 +226,13 @@ def summarize_week(user, start_day):
 
 
 def bg_task_completion_export(base_64_image_array, userid):
-    activities = convert(explain_images(base_64_image_array))
+    image_descriptions = image_client.explain_images(base_64_image_array)
+    activities = image_client.convert(image_descriptions)
     insert_batch_metadata(userid, datetime.datetime.now())
     for i,activity in enumerate(activities):
         insert_batch_image_data(retrive_curr_batch(), activity["Description"] ,activity["Activity"], base_64_image_array[i])
     return activities
+
+
+def respond_using_desc_context(descriptions, data):
+    return summarizer_client.query_user_response(descriptions, data)
