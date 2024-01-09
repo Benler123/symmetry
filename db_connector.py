@@ -3,7 +3,6 @@ import sqlalchemy
 from queries import *
 from datetime import datetime, timedelta
 # from gpt_client import *
-import datetime
 from LLM_client_factory import LLM_client_factory
 
 project_id = "fast-gate-405518"

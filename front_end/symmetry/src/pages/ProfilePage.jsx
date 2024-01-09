@@ -20,7 +20,7 @@ const ProfilePage = () => {
     navigate(-1); // This will navigate back to the previous page
   };
   const location = useLocation();
-  const [selectedDay, setSelectedDay] = useState("M");
+  const [selectedDay, setSelectedDay] = useState("TR");
   const [blockData, setBlockData] = useState({
     "M": {
       "summary": "Throughout the day today, Tyler worked hard all morning researching and programming what was talked about in this week's meetings. He met with 3 team members on 3 different occasions today, at 10:30 AM, 1:30 PM, and 4:00 PM. While he was mostly focused today he had a few times where he was not working and he wasn't doing anything",
@@ -93,68 +93,7 @@ const ProfilePage = () => {
 
 
   useEffect(() => {
-
-    fetch("http://127.0.0.1:8001/matts_endpoint/Tyler%20Kwok/2023-11-15", {
-      method: "GET",
-      headers: {
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setBlockData(data)
-        const newTotalHours = {};
-        const newFocusedHours = {};
-        let weeklyHours = 0;
-        const activityTotals = {};
-
-        Object.entries(data).forEach(([day, { activities }]) => {
-          let totalHours = 0;
-          let focusedHours = 0;
-
-          Object.entries(activities).forEach(([activity, hours]) => {
-            totalHours += hours;
-            if (!["Scheduling", "Meeting", "Off-Topic"].includes(activity)) {
-              focusedHours += hours;
-            }
-
-            // Aggregate activity hours for the week
-            activityTotals[activity] = (activityTotals[activity] || 0) + hours;
-          });
-
-          newTotalHours[day] = totalHours;
-          newFocusedHours[day] = focusedHours;
-          weeklyHours += totalHours;
-        });
-        const colors = [
-          '#F7464A', // Red
-          '#46BFBD', // Blue
-          '#FDB45C', // Yellow
-          '#949FB1', // Green
-          '#4D5360', // Purple
-          '#8A2BE2', // Dark Blue
-          '#FFD700', // Gold
-        ];
-
-        const ites = Object.keys(activityTotals).map((key, index) => {
-          const colorIndex = index % colors.length; // Repeat colors if more categories than colors
-          return {
-            color: colors[colorIndex],
-            text: `${activityTotals[key]} Hours ${key}`
-          };
-        });
-        setDataPoints(Object.values(activityTotals))
-
-        setBulletPointItems(ites);
-        setTotalHoursPerDay(newTotalHours);
-        setFocusedHoursPerDay(newFocusedHours);
-        console.log("new focused hourds")
-        console.log(newFocusedHours)
-        setTotalWeeklyHours(weeklyHours);
-        setWeekData(activityTotals);
-
-
-      })
-      .catch((error) => console.log(error));
+    console.log("The data for bullet endpoint is about to be fetched?")
 
     fetch("http://127.0.0.1:8001/week_user_data/Tyler%20Kwok/2023-11-14", {
       method: "GET",
@@ -180,12 +119,87 @@ const ProfilePage = () => {
           transformedData[day] = maxHours;
         });
         setTotalWeeklyHours(totalHours)
+        transformedData["TR"] = transformedData["Th"]
+        transformedData["Th"] = 0
+  
         setTotalHoursPerDay(transformedData)
+
         console.log("transformed")
         console.log(transformedData)
 
       })
       .catch((error) => console.log(error));
+
+
+    fetch("http://127.0.0.1:8001/matts_endpoint/Tyler%20Kwok/2023-11-15", {
+      method: "GET",
+      headers: {
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("The data for matts endpoint is fetched?")
+        console.log(data)
+        setBlockData(data)
+        const newTotalHours = {};
+        const newFocusedHours = {};
+        let weeklyHours = 0;
+        const activityTotals = {};
+
+        Object.entries(data).forEach(([day, { activities }]) => {
+          let totalHours = 0;
+          let focusedHours = 0;
+
+          Object.entries(activities).forEach(([activity, hours]) => {
+            totalHours += hours;
+            if (!["Scheduling", "Meeting", "Off-Topic"].includes(activity)) {
+              focusedHours += hours;
+            }
+
+            // Aggregate activity hours for the week
+            activityTotals[activity] = (activityTotals[activity] || 0) + hours;
+          });
+          console.log(day + " has total hours of " + totalHours + " and focused hours of " + focusedHours)
+          newTotalHours[day] = totalHours;
+          console.log("new total hours: ")
+          console.log(newTotalHours)
+          newFocusedHours[day] = focusedHours;
+          weeklyHours += totalHours;
+        });
+        const colors = [
+          '#F7464A', // Red
+          '#46BFBD', // Blue
+          '#FDB45C', // Yellow
+          '#949FB1', // Green
+          '#4D5360', // Purple
+          '#8A2BE2', // Dark Blue
+          '#FFD700', // Gold
+        ];
+
+        const ites = Object.keys(activityTotals).map((key, index) => {
+          const colorIndex = index % colors.length; // Repeat colors if more categories than colors
+          return {
+            color: colors[colorIndex],
+            text: `${activityTotals[key]} Hours ${key}`
+          };
+        });
+        setDataPoints(Object.values(activityTotals))
+
+        setBulletPointItems(ites);
+        console.log(newTotalHours)
+        //newTotalHours["TR"] = newTotalHours["Th"];
+        setTotalHoursPerDay(newTotalHours);
+        setFocusedHoursPerDay(newFocusedHours);
+        console.log("new focused hourds")
+        console.log(newFocusedHours)
+        setTotalWeeklyHours(weeklyHours);
+        setWeekData(activityTotals);
+
+
+      })
+      .catch((error) => console.log(error));
+
+   
   }, []);
 
   const searchParams = new URLSearchParams(location.search);

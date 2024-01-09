@@ -148,6 +148,55 @@ def summarize_daily_user_descriptions(user, start_date):
 @app.get("/matts_endpoint/{user}/{start_date}")
 def matts_endpoint(user, start_date):
     print("endpoint is running")
+    daySummaries = {
+    "M": {
+        "summary": "Tyler came in at 11AM and watched Youtube for two hours, then left the office.",
+        "activities": {
+            "Coding": 3,
+            "Browsing": 1,
+            "Meeting": 2,
+            "Communicating": 1,
+            "Off-Topic": 1
+        }
+    },
+    "T": {
+        "summary": "Tyler was intensely focused on Tuesday, editing mod-sim.c. Later in the day, he was working on a file called assignment.py while looking at a PDF called machine_learning.pdf. He also messaged a few peers on teams for academic help",
+        "activities": {
+            "Coding": 4,
+            "Browsing": 1,
+            "Scheduling": 2,
+            "Communicating": 1
+        }
+    },
+    "W": {
+        "summary": "In the morning Tyler had a meeting. This seemingly took 2 hours of capture. These meetings seemed to be about strategic alignment of his group project",
+        "activities": {
+            "Meeting": 2,
+            "Communicating": 2,
+            "Scheduling": 2,
+            "Chatting": 2
+        }
+    },
+    "TR": {
+        "summary": "Tyler collaborated a lot on Thursday. He synced up with his hackathon team and his mobile apps group.  He spent the day collectively addressing challenges with these groups.",
+        "activities": {
+            "Meeting": 3,
+            "Communicating": 3,
+            "Chatting": 2
+        }
+    },
+    "F": {
+        "summary": "On Friday Tyler wrapped up some quick tasks and prepared for the next week. He scheduled meetings for next week, discussed with his research professor, and met with his hackathon group",
+        "activities": {
+            "Coding": 2,
+            "Browsing": 1,
+            "Scheduling": 2,
+            "Communicating": 2,
+            "Off-Topic": 1
+        }
+    }
+}
+    return daySummaries
     dict = retrieve_user_category_data_by_week(user, start_date)
     dict2 = summarize_week(user, start_date)
     for key in dict:

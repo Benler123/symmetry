@@ -19,9 +19,17 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
     "M": `Throughout the day today, ${personName} worked hard all morning researching and programming what was talked about in this week's meetings. ${personName} met with 3 team members on 3 different occasions today.`,
     "T": `Tuesday is the peak of productivity and deep work for ${personName}. It's the day when energy levels are typically high, making it ideal for tackling the most challenging tasks.`,
     "W": `Midweek, Wednesday serves as a checkpoint for evaluating ${personName}'s week's progress. It's a time for reviewing goals and strategies.`,
-    "Th": `Thursday is for collaboration and meetings for ${personName}. It's an opportunity to sync with the team and assess progress.`,
+    "TR": `Thursday is for collaboration and meetings for ${personName}. It's an opportunity to sync with the team and assess progress.`,
     "F": `Friday is about wrapping up and reflection for ${personName}. It's a time to finish tasks, review the week's achievements, and prepare for the next week.`
   };
+
+  const workWeekPercentages = {
+    "M": 0,
+    "T": 28,
+    "W": 23,
+    "TR": 32,
+    "F": 17
+  }
 
   const percentages = {
     "M": 26,
@@ -41,7 +49,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
   const data = {
     labels: ["working", "not"],
     datasets: [{
-      data: [dailyHours[selectedDay] / weeklyTotal * 100, 100 - (dailyHours[selectedDay] / weeklyTotal * 100)],
+      data: [workWeekPercentages[selectedDay], 100 - workWeekPercentages[selectedDay]],
       backgroundColor: ['#FFFFFF', '#46BFBD'],
       borderWidth: 0,
     }],
@@ -76,7 +84,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
         <div style={{ width: '80%', height: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', transform: 'translateX(-120px)' }}>
           <Pie data={data} options={chartOptions} />
         </div>
-        <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {Math.round(dailyHours[selectedDay] / weeklyTotal * 100,4)}% of {personName}'s work this week</h3>
+        <h3 style={{ transform: 'translateX(-210px) translateY(-20px)' }}>  {dayName[selectedDay]} made up {workWeekPercentages[selectedDay]}% of {personName}'s work this week</h3>
       </div>
     </div>
   );
