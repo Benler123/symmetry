@@ -5,12 +5,12 @@ import { ArcElement, Chart as ChartJS } from 'chart.js';
 ChartJS.register(ArcElement);
 
 function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dailyHours, weeklyTotal, summary}) {
-  const days = ["M", "T", "W", "Th", "F"]; // Array of days
+  const days = ["M", "T", "W", "TR", "F"]; // Array of days
   const dayName = {
     "M": "Monday",
     "T": "Tuesday",
     "W": "Wednesday",
-    "Th": "Thursday",
+    "TR": "Thursday",
     "F": "Friday"
   }
 
@@ -27,7 +27,7 @@ function DailyBreakDownComponent({ selectedDay, setSelectedDay, personName, dail
     "M": 26,
     "T": 34,
     "W": 17,
-    "Th": 22,
+    "TR": 22,
     "F": 8
   }
 

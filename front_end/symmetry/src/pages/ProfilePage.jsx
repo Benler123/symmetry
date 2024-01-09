@@ -23,62 +23,74 @@ const ProfilePage = () => {
   const [selectedDay, setSelectedDay] = useState("M");
   const [blockData, setBlockData] = useState({
     "M": {
-        "summary": "Throughout the day today, Tyler worked hard all morning researching and programming what was talked about in this week's meetings. He met with 3 team members on 3 different occasions today, at 10:30 AM, 1:30 PM, and 4:00 PM. While he was mostly focused today he had a few times where he was not working and he wasn't doing anything",
-        "activities": {
-            "Coding": 3,
-            "Browsing": 1,
-            "Meeting": 2,
-            "Communicating": 1,
-            "Off-Topic": 1
-        }
+      "summary": "Throughout the day today, Tyler worked hard all morning researching and programming what was talked about in this week's meetings. He met with 3 team members on 3 different occasions today, at 10:30 AM, 1:30 PM, and 4:00 PM. While he was mostly focused today he had a few times where he was not working and he wasn't doing anything",
+      "activities": {
+        "Coding": 3,
+        "Browsing": 1,
+        "Meeting": 2,
+        "Communicating": 1,
+        "Off-Topic": 1
+      }
     },
     "T": {
-        "summary": "Tuesday is the peak of productivity and deep work. It's the day when energy levels are typically high, making it ideal for tackling the most challenging and complex tasks. Emphasis is on concentration and effective execution of tasks that require significant mental effort or creativity. This day is about maximizing output and making substantial progress on key projects.",
-        "activities": {
-            "Coding": 4,
-            "Browsing": 1,
-            "Scheduling": 2,
-            "Communicating": 1
-        }
+      "summary": "Tuesday is the peak of productivity and deep work. It's the day when energy levels are typically high, making it ideal for tackling the most challenging and complex tasks. Emphasis is on concentration and effective execution of tasks that require significant mental effort or creativity. This day is about maximizing output and making substantial progress on key projects.",
+      "activities": {
+        "Coding": 4,
+        "Browsing": 1,
+        "Scheduling": 2,
+        "Communicating": 1
+      }
     },
     "W": {
-        "summary": "Midweek, Wednesday serves as a checkpoint for evaluating the week's progress. It's a time for reviewing goals, strategies, and tasks to ensure everything is on track. Adjustments and recalibrations are made as needed. This day often involves reassessing priorities and refocusing.",
-        "activities": {
-            "Meeting": 2,
-            "Communicating": 2,
-            "Scheduling": 2,
-            "Chatting": 2
-        }
+      "summary": "Midweek, Wednesday serves as a checkpoint for evaluating the week's progress. It's a time for reviewing goals, strategies, and tasks to ensure everything is on track. Adjustments and recalibrations are made as needed. This day often involves reassessing priorities and refocusing.",
+      "activities": {
+        "Meeting": 2,
+        "Communicating": 2,
+        "Scheduling": 2,
+        "Chatting": 2
+      }
     },
     "TR": {
-        "summary": "Thursday is for collaboration and meetings. It's an opportunity to sync with the team and assess progress. The day is geared towards teamwork, sharing ideas, and collectively addressing challenges. It's a crucial time for communication, building consensus, and ensuring that everyone is contributing effectively towards common goals.",
-        "activities": {
-            "Meeting": 3,
-            "Communicating": 3,
-            "Chatting": 2
-        }
+      "summary": "Thursday is for collaboration and meetings. It's an opportunity to sync with the team and assess progress. The day is geared towards teamwork, sharing ideas, and collectively addressing challenges. It's a crucial time for communication, building consensus, and ensuring that everyone is contributing effectively towards common goals.",
+      "activities": {
+        "Meeting": 3,
+        "Communicating": 3,
+        "Chatting": 2
+      }
     },
     "F": {
-        "summary": "Friday is about wrapping up and reflection. It's a time to finish tasks, review the week's achievements, and prepare for the next week. The focus is on closing pending issues, reflecting on accomplishments and learnings, and setting the stage for a seamless transition into the upcoming week. It's also a day for personal and professional growth reflections.",
-        "activities": {
-            "Coding": 2,
-            "Browsing": 1,
-            "Scheduling": 2,
-            "Communicating": 2,
-            "Off-Topic": 1
-        }
+      "summary": "Friday is about wrapping up and reflection. It's a time to finish tasks, review the week's achievements, and prepare for the next week. The focus is on closing pending issues, reflecting on accomplishments and learnings, and setting the stage for a seamless transition into the upcoming week. It's also a day for personal and professional growth reflections.",
+      "activities": {
+        "Coding": 2,
+        "Browsing": 1,
+        "Scheduling": 2,
+        "Communicating": 2,
+        "Off-Topic": 1
+      }
     }
-}
-);
+  }
+  );
   const [weekData, setWeekData] = useState({});
-  const[activityData, setActivityData] = useState({});
+  const [activityData, setActivityData] = useState({});
   const [dataPoints, setDataPoints] = useState([22, 44, 55]);
 
-  const [totalHoursPerDay, setTotalHoursPerDay] = useState({});
-  const [focusedHoursPerDay, setFocusedHoursPerDay] = useState({});
-  const [totalWeeklyHours, setTotalWeeklyHours] = useState(0);
+  const [totalHoursPerDay, setTotalHoursPerDay] = useState({
+    "M": 0,
+    "T": 0,
+    "W": 0,
+    "TR": 0,
+    "F": 0
+  });
+  const [focusedHoursPerDay, setFocusedHoursPerDay] = useState({
+    "M": 0,
+    "T": 0,
+    "W": 0,
+    "TR": 0,
+    "F": 0
+  });
+  const [totalWeeklyHours, setTotalWeeklyHours] = useState(-1);
   const [bulletPointItems, setBulletPointItems] = useState([]);
-  
+
 
   useEffect(() => {
 
@@ -96,22 +108,22 @@ const ProfilePage = () => {
         const activityTotals = {};
 
         Object.entries(data).forEach(([day, { activities }]) => {
-            let totalHours = 0;
-            let focusedHours = 0;
+          let totalHours = 0;
+          let focusedHours = 0;
 
-            Object.entries(activities).forEach(([activity, hours]) => {
-                totalHours += hours;
-                if (!["Scheduling", "Meeting", "Off-Topic"].includes(activity)) {
-                    focusedHours += hours;
-                }
+          Object.entries(activities).forEach(([activity, hours]) => {
+            totalHours += hours;
+            if (!["Scheduling", "Meeting", "Off-Topic"].includes(activity)) {
+              focusedHours += hours;
+            }
 
-                // Aggregate activity hours for the week
-                activityTotals[activity] = (activityTotals[activity] || 0) + hours;
-            });
+            // Aggregate activity hours for the week
+            activityTotals[activity] = (activityTotals[activity] || 0) + hours;
+          });
 
-            newTotalHours[day] = totalHours;
-            newFocusedHours[day] = focusedHours;
-            weeklyHours += totalHours;
+          newTotalHours[day] = totalHours;
+          newFocusedHours[day] = focusedHours;
+          weeklyHours += totalHours;
         });
         const colors = [
           '#F7464A', // Red
@@ -139,41 +151,41 @@ const ProfilePage = () => {
         console.log(newFocusedHours)
         setTotalWeeklyHours(weeklyHours);
         setWeekData(activityTotals);
-        
-        
+
+
       })
       .catch((error) => console.log(error));
 
-      fetch("http://127.0.0.1:8001/week_user_data/Tyler%20Kwok/2023-11-14" , {
-        method: "GET",
-        headers: {
-        },
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("hello I am the actual data")
-          console.log(data)
+    fetch("http://127.0.0.1:8001/week_user_data/Tyler%20Kwok/2023-11-14", {
+      method: "GET",
+      headers: {
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("hello I am the actual data")
+        console.log(data)
 
-          let totalHours = 0;
+        let totalHours = 0;
 
-          Object.values(data).forEach(day => {
-              const dayHours = Object.values(day.activities).reduce((sum, current) => sum + current, 0);
-              totalHours += dayHours;
-          });
-          const transformedData = {};
+        Object.values(data).forEach(day => {
+          const dayHours = Object.values(day.activities).reduce((sum, current) => sum + current, 0);
+          totalHours += dayHours;
+        });
+        const transformedData = {};
 
         Object.keys(data).forEach(day => {
-        const activities = data[day].activities;
-        const maxHours = Math.max(0, ...Object.values(activities)); // Defaults to 0 if no activities
-        transformedData[day] = maxHours;
-    });
-          setTotalWeeklyHours(totalHours)
-          setTotalHoursPerDay(transformedData)
-          console.log("transformed")
-          console.log(transformedData)
+          const activities = data[day].activities;
+          const maxHours = Math.max(0, ...Object.values(activities)); // Defaults to 0 if no activities
+          transformedData[day] = maxHours;
+        });
+        setTotalWeeklyHours(totalHours)
+        setTotalHoursPerDay(transformedData)
+        console.log("transformed")
+        console.log(transformedData)
 
-        })
-        .catch((error) => console.log(error));
+      })
+      .catch((error) => console.log(error));
   }, []);
 
   const searchParams = new URLSearchParams(location.search);
@@ -188,11 +200,11 @@ const ProfilePage = () => {
   const footerHeight = 30; // Assume footer height is 50px
 
   const mainContentStyle = {
-    flex:'1',
+    flex: '1',
     display: 'flex',
     flexDirection: 'row',
   };
-  
+
   const chartOptions = {
     maintainAspectRatio: false,
     responsive: true,
@@ -230,7 +242,7 @@ const ProfilePage = () => {
     'bsteele': "Ben Steele",
     'tkwok': "Tyler Kwok",
     'dshah': "Dhruv Shah",
-    'msteele':"Matt Steele"
+    'msteele': "Matt Steele"
   }
   const mockTasks = [
     ['Programming', 21],
@@ -247,9 +259,9 @@ const ProfilePage = () => {
   }
   const labels = mockTasks.map(task => task[0]);
   const data = {
-    labels: labels, 
+    labels: labels,
     datasets: [{
-      data: dataPoints, 
+      data: dataPoints,
       backgroundColor: [
         '#F7464A', // Red
         '#46BFBD', // Blue
@@ -292,44 +304,42 @@ const ProfilePage = () => {
     color: 'white', // Sets the text color to white
     cursor: 'pointer'
   };
-  
-  
+
+
   return (
     <div style={profileContainerStyle}>
       <div style={mainContentStyle}>
-    <div onClick={goBack} style={backButtonStyle}>
-      <span style={{ fontSize: '24px' }}>&#x2190;</span> {/* Unicode Left Arrow */}
-      <span style={{ marginTop: '3px', marginLeft: '5px', fontSize: '16px' }}>Back to your team</span> {/* Small text label */}
-    </div>
-      <div style={leftPanelStyle}>
-        <div style={{ marginLeft: "20px", marginTop: "20px", transform: 'translateY(30px)'}}>
-          <ProfileComponent profileSvg={selectedImage} name={selectedName} onClick={() => { }} />
-          <div style={{ width: "70%", marginLeft: "5px",}}>
-            <WorkGradComponent  focusedWorkPercent={
-  totalHoursPerDay[selectedDay] === 0 
-  ? 0 
-  : focusedHoursPerDay[selectedDay] / totalHoursPerDay[selectedDay] * 100 > 100
-    ? 55
-    : (focusedHoursPerDay[selectedDay] / totalHoursPerDay[selectedDay]) * 100
-}
+        <div onClick={goBack} style={backButtonStyle}>
+          <span style={{ fontSize: '24px' }}>&#x2190;</span> {/* Unicode Left Arrow */}
+          <span style={{ marginTop: '3px', marginLeft: '5px', fontSize: '16px' }}>Back to your team</span> {/* Small text label */}
+        </div>
+        <div style={leftPanelStyle}>
+          <div style={{ marginLeft: "20px", marginTop: "20px", transform: 'translateY(30px)' }}>
+            <ProfileComponent profileSvg={selectedImage} name={selectedName} onClick={() => { }} />
+            <div style={{ width: "70%", marginLeft: "5px", }}>
+              <WorkGradComponent focusedWorkPercent={
+                totalHoursPerDay[selectedDay] === 0
+                  ? 0
+                  : focusedHoursPerDay[selectedDay] / totalHoursPerDay[selectedDay] * 100 > 100
+                    ? 55
+                    : (focusedHoursPerDay[selectedDay] / totalHoursPerDay[selectedDay]) * 100
+              }
 
- backgroundColor={colors.backgroundColor} />
+                backgroundColor={colors.backgroundColor} />
+            </div>
+            <div style={{ width: "85%", marginLeft: "5px" }}>
+              {blockData[selectedDay] && <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal={totalWeeklyHours} dailyHours={totalHoursPerDay} summary={blockData[selectedDay].summary}></DailyBreakDownComponent>}          </div>
           </div>
-          <div style={{ width: "85%", marginLeft: "5px"}}>
-            {/* Pass the selectedName as personName prop to DailyBreakDownComponent */}
-            blockData[selectedDay] && <DailyBreakDownComponent selectedDay={selectedDay} setSelectedDay={setSelectedDay} personName={selectedName} weeklyTotal = {totalWeeklyHours} dailyHours = {totalHoursPerDay} summary={blockData[selectedDay].summary}></DailyBreakDownComponent>
+          {/* Left panel content */}
+        </div>
+        <div style={rightPanelStyle}>
+          <div style={{ width: '50%', height: '50%', marginLeft: "14vw" }}>
+            <Pie style={{ transform: 'translateX(-140px)' }} data={data} options={chartOptions} />
+            <h2 style={{ justifyContent: 'center', marginLeft: "10px", transform: 'translateY(-40px) translateX(-120px)', fontSize: "1.7em" }}>
+              This week, {selectedName} spent:</h2>
+            <div style={{ transform: 'translateY(-40px) translateX(-140px)' }}><ColoredBullets items={bulletPointItems} /></div>
           </div>
         </div>
-        {/* Left panel content */}
-      </div>
-      <div style={rightPanelStyle}>
-        <div style={{ width: '50%', height: '50%', marginLeft: "14vw"}}>
-            <Pie style ={{transform: 'translateX(-140px)'}}data={data} options={chartOptions} />
-            <h2 style={{ justifyContent: 'center', marginLeft: "10px", transform: 'translateY(-40px) translateX(-120px)', fontSize: "1.7em" }}>
-            This week, {selectedName} spent:</h2>
-            <div style={{transform: 'translateY(-40px) translateX(-140px)'}}><ColoredBullets items={bulletPointItems} /></div>
-            </div>
-      </div>
       </div>
       <Footer /> {/* Place Footer component here */}
     </div>

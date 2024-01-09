@@ -15,9 +15,9 @@ import Footer from "../components/footer";
 
 ChartJS.register(ArcElement);
 function ManagerPage() {
-  const [teamHours, setTeamHours] = useState();
-  const [focusedHours, setFocusedHours] = useState();
-  const [cumulativeHours, setCumulativeHours] = useState();
+  const [teamHours, setTeamHours] = useState(0);
+  const [focusedHours, setFocusedHours] = useState(-1);
+  const [cumulativeHours, setCumulativeHours] = useState(0);
   const [dataPoints, setDataPoints] = useState([22, 44, 55]);
   const [bulletPointItems, setBulletPointItems] = useState([]);
   useEffect(() => {
