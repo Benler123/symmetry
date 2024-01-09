@@ -16,7 +16,7 @@ class llama_vision_client(Image_Model):
         print(image_texts)
         end_time = time.time()
         print(f"Time taken: {end_time - start_time} seconds")
-        return 'this is a test'
+        return image_texts[0]
 
   
 
