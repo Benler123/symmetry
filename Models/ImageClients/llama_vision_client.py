@@ -7,15 +7,14 @@ import json
 from prompts import ACTIVITY_CAPTURE_PROMPT as prompt 
 
 class llama_vision_client(Image_Model):
-    def __init__(self, BASE_URI='https://sbg69x9tdmmurm-5000.proxy.runpod.net', STREAM=False):
+    def __init__(self, BASE_URI='https://rtxf0pthq2cwad-5000.proxy.runpod.net', STREAM=False):
         self.BASE_URI = BASE_URI
 
     def explain_images(self, base64_images):
         image_texts = [self.explain_single_image(image) for image in base64_images] 
+        print(image_texts)
         return image_texts[0]
-
-  
-
+    
 
     def explain_single_image(self, base64_image):
         payload = {
@@ -34,5 +33,14 @@ class llama_vision_client(Image_Model):
         # print(f'Status code: {r.status_code}')
     
         resp_json = r.json()
+        print(resp_json)
         return resp_json['response']
- 
+
+    # def summarize_batch(self, images):
+    #     payload = {
+    #         'model_path': 'liuhaotian/llava-v1.5-7b',
+    #         'prompt': 'The following paragraphs 
+    #         'temperature': 0.2,
+    #         'max_new_tokens': 512,
+    #         'stream': False,   
+    #     }

@@ -3,7 +3,6 @@ import sqlalchemy
 from queries import *
 from datetime import datetime, timedelta
 # from gpt_client import *
-import datetime
 from LLM_client_factory import LLM_client_factory
 
 project_id = "fast-gate-405518"
@@ -227,7 +226,7 @@ def summarize_week(user, start_day):
 def bg_task_completion_export(base_64_image_array, userid):
     image_descriptions = image_client.explain_images(base_64_image_array)
     activities = image_client.convert(image_descriptions)
-    insert_batch_metadata(userid, datetime.datetime.now())
+    insert_batch_metadata(userid, datetime.now())
     for i,activity in enumerate(activities):
         insert_batch_image_data(retrive_curr_batch(), activity["Description"] ,activity["Activity"], base_64_image_array[i])
     return activities
