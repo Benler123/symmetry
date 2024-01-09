@@ -5,7 +5,7 @@ import re
 import json
 from prompts import ACTIVITY_CAPTURE_PROMPT as prompt 
 
-class llaama_vision_client(Image_Model):
+class llama_vision_client(Image_Model):
     def __init__():
         pass
     def explain_images(self, base64_images):
