@@ -11,11 +11,7 @@ class llama_vision_client(Image_Model):
         self.BASE_URI = BASE_URI
 
     def explain_images(self, base64_images):
-        start_time = time.time()
         image_texts = [self.explain_single_image(image) for image in base64_images] 
-        print(image_texts)
-        end_time = time.time()
-        print(f"Time taken: {end_time - start_time} seconds")
         return image_texts[0]
 
   
