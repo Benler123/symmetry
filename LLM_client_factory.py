@@ -2,6 +2,8 @@ from Models.Image_Model import Image_Model
 from Models.Summarizer_Model import Summarizer_Model
 from Models.ImageClients.gpt_vision_client import gpt_vision_client
 from Models.SummarizerClients.gpt3_client import gpt3_client
+from Models.ImageClients.llama_vision_client import llama_vision_client
+from Models.SummarizerClients.llama_client import llama_client
 
 '''
 Factory to create image and summarizer models. To add a new model, add a new function to the switcher dictionary.
@@ -12,7 +14,8 @@ class LLM_client_factory:
 
     def generate_image_model(self, model: str) -> Image_Model:
         switcher = {
-            "gpt": gpt_vision_client
+            "gpt": gpt_vision_client,
+            "llama": llama_vision_client
         }
         
         func = switcher.get(model, lambda: "Invalid model")
@@ -21,7 +24,8 @@ class LLM_client_factory:
 
     def generate_summarizer_model(self, model:str) -> Summarizer_Model:
         switcher = {
-            "gpt": gpt3_client
+            "gpt": gpt3_client,
+            "llama": llama_client
         }
 
         func = switcher.get(model, lambda: "Invalid model")

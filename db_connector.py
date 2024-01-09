@@ -20,7 +20,7 @@ categories =  ['Coding', 'Browsing', 'Meeting',  'Communicating', 'Scheduling', 
 connector = Connector()
 
 client_factory = LLM_client_factory()
-image_client = client_factory.generate_image_model("gpt")
+image_client = client_factory.generate_image_model("llama")
 summarizer_client = client_factory.generate_summarizer_model("gpt")
 
 
