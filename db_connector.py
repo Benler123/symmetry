@@ -19,7 +19,7 @@ categories =  ['Coding', 'Browsing', 'Meeting',  'Communicating', 'Scheduling', 
 connector = Connector()
 
 client_factory = LLM_client_factory()
-image_client = client_factory.generate_image_model("llama")
+image_client = client_factory.generate_image_model("gpt")
 summarizer_client = client_factory.generate_summarizer_model("gpt")
 
 
@@ -42,31 +42,10 @@ pool = sqlalchemy.create_engine(
 db_conn = pool.connect()
 
 def initialize_database():
-    # create ratings table in our sandwiches database
-    db_conn.execute(
-    sqlalchemy.text(
-        create_primary_table
-    )
-    )
 
-    # commit transaction (SQLAlchemy v2.X.X is commit as you go)
-    db_conn.commit()
-
-    db_conn.execute(
-    sqlalchemy.text(
-        create_second_table
-    )
-    )
-
-    db_conn.commit()
-
-    db_conn.execute(
-        sqlalchemy.text(
-            create_description_table
-        )
-    )
-    
-    db_conn.commit()
+    query_and_rollback_on_error(create_primary_table)
+    query_and_rollback_on_error(create_second_table)
+    query_and_rollback_on_error(create_description_table)
 
 def insert_batch_metadata(device, timestamp):
 
@@ -77,32 +56,18 @@ def insert_batch_metadata(device, timestamp):
     text_string = text_string.replace(":device", "\"" + device + "\"")
     text_string = text_string.replace(":timestamp", "\"" + timestamp.strftime("%Y-%m-%d") + "\"")
 
-    insert_primary = sqlalchemy.text(
-        text_string,
-    )
-
-    db_conn.execute(insert_primary)
-    
-    db_conn.commit()
+    query_and_rollback_on_error(text_string)
 
     
 def clear_database():
 
     
 
-    db_conn.execute(sqlalchemy.text(
-        "DELETE FROM ImageTable"
-    ))
-    db_conn.execute(sqlalchemy.text(
-        "DELETE FROM data"
-    ))
 
-
-    db_conn.execute(sqlalchemy.text("ALTER TABLE data AUTO_INCREMENT = 1;"))
-    db_conn.execute(sqlalchemy.text("ALTER TABLE ImageTable AUTO_INCREMENT = 1;"))
-
-    db_conn.commit()
-
+    query_and_rollback_on_error("DELETE FROM ImageTable")
+    query_and_rollback_on_error("DELETE FROM data")
+    query_and_rollback_on_error("ALTER TABLE data AUTO_INCREMENT = 1;")
+    query_and_rollback_on_error("ALTER TABLE ImageTable AUTO_INCREMENT = 1;")
 
 
 
@@ -112,13 +77,9 @@ def insert_batch_image_data(batch_id, description, category, base64_image):
     text_string = text_string.replace(":description", "'" + description + "'")
     text_string = text_string.replace(":category", "'" + category.replace("\n", "") + "'")
     text_string = text_string.replace(":base64_image", "'" + "SuperSecretCheatCode" + "'")
-
-    insert_images = sqlalchemy.text(text_string)
+    query_and_rollback_on_error(text_string)
     
-    db_conn.execute(insert_images)
-    
-    db_conn.commit()
-    return "Appleseed"
+    return
 
 def retrieve_all_primary():
     retrieve_primary = sqlalchemy.text(
@@ -234,3 +195,11 @@ def bg_task_completion_export(base_64_image_array, userid):
 
 def respond_using_desc_context(descriptions, data):
     return summarizer_client.query_user_response(descriptions, data)
+
+def query_and_rollback_on_error(query: str):
+    try:
+        db_conn.execute(sqlalchemy.text(query))
+        db_conn.commit()
+    except:
+        db_conn.rollback()
+        raise Exception("Query failed")
