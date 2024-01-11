@@ -13,3 +13,10 @@ Once this is running, start the screenshot daemon. The userid is here is arbitra
 ```
 python client.py --server_url http://127.0.0.1:8001/upload --userid Tyler
 ```
+If everything is working, you should be able to see requests to the back-end server. There should also be real-time infereneces about the ongoings of your screen.
+
+### To Run Front-End
+move into the front_end/symmetry directory and run 
+```
+npm start
+```
